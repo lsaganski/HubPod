@@ -15,6 +15,8 @@
 		21BF9534233ABE0C009B0237 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21BF9532233ABE0C009B0237 /* Main.storyboard */; };
 		21BF9536233ABE0F009B0237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21BF9535233ABE0F009B0237 /* Assets.xcassets */; };
 		21BF9539233ABE0F009B0237 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21BF9537233ABE0F009B0237 /* LaunchScreen.storyboard */; };
+		21BF953F233BDB67009B0237 /* HubCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF953E233BDB67009B0237 /* HubCalendar.swift */; };
+		21BF9541233BDD78009B0237 /* HubPod.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 21BF9540233BDD78009B0237 /* HubPod.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 		21BF9535233ABE0F009B0237 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21BF9538233ABE0F009B0237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21BF953A233ABE0F009B0237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21BF953E233BDB67009B0237 /* HubCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HubCalendar.swift; path = ../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod/HubCalendar.swift; sourceTree = "<group>"; };
+		21BF9540233BDD78009B0237 /* HubPod.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HubPod.podspec; path = ../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +96,10 @@
 		21BF9510233ABC64009B0237 /* HubPod */ = {
 			isa = PBXGroup;
 			children = (
+				21BF9540233BDD78009B0237 /* HubPod.podspec */,
 				21BF9511233ABC64009B0237 /* HubPod.h */,
 				21BF9512233ABC64009B0237 /* Info.plist */,
+				21BF953E233BDB67009B0237 /* HubCalendar.swift */,
 			);
 			path = HubPod;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 				TargetAttributes = {
 					21BF950D233ABC64009B0237 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					21BF9516233ABC65009B0237 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -233,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21BF9541233BDD78009B0237 /* HubPod.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21BF953F233BDB67009B0237 /* HubCalendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +444,7 @@
 		21BF9523233ABC65009B0237 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -452,6 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.itaubba.HubPod;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -460,6 +471,7 @@
 		21BF9524233ABC65009B0237 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -485,6 +497,7 @@
 		21BF9526233ABC65009B0237 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 966GA65W7R;
 				INFOPLIST_FILE = HubPodTests/Info.plist;
@@ -503,6 +516,7 @@
 		21BF9527233ABC65009B0237 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 966GA65W7R;
 				INFOPLIST_FILE = HubPodTests/Info.plist;
