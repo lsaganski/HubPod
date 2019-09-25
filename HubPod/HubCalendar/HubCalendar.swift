@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HubCalendarDelegate: AnyObject {
+public protocol HubCalendarDelegate: AnyObject {
     func onResizeSked(expanding: Bool, height: CGFloat)
     func onPressDate(date: Date)
 }
@@ -35,117 +35,117 @@ public final class HubCalendar: UIView {
     var viewExpandedHeightConstraint: NSLayoutConstraint?
     
     // viewContainer properties
-    @IBInspectable var containerBackgroundColor: UIColor = .white {
+    @IBInspectable public var containerBackgroundColor: UIColor = .white {
         didSet {
             configUIViewContainer()
         }
     }
-    var containerHorizontalPaddings = CGFloat(80)
-    @IBInspectable var backgroundImage: UIImage? {
+    public var containerHorizontalPaddings = CGFloat(80)
+    @IBInspectable public var backgroundImage: UIImage? {
         didSet {
             configUIViewContainer()
         }
     }
     // stackViewHeader properties
-    @IBInspectable var stackViewHeaderBackgroundColor: UIColor = .clear {
+    @IBInspectable public var stackViewHeaderBackgroundColor: UIColor = .clear {
         didSet {
             configUIStackViewHeaderBasic()
         }
     }
-    var buttonPriorBackgroundColor: UIColor = .clear
-    var labelMonthBackgroundColor: UIColor = .clear
-    var buttonNextBackgroundColor: UIColor = .clear
-    @IBInspectable var buttonPriorTextColor: UIColor = .lightGray {
+    public var buttonPriorBackgroundColor: UIColor = .clear
+    public var labelMonthBackgroundColor: UIColor = .clear
+    public var buttonNextBackgroundColor: UIColor = .clear
+    @IBInspectable public var buttonPriorTextColor: UIColor = .lightGray {
         didSet {
             configUIStackViewHeaderPriorButton()
         }
     }
-    @IBInspectable var buttonNextTextColor: UIColor = .lightGray {
+    @IBInspectable public var buttonNextTextColor: UIColor = .lightGray {
         didSet {
             configUIStackViewHeaderNextButton()
         }
     }
-    @IBInspectable var buttonPriorImage: UIImage? {
+    @IBInspectable public var buttonPriorImage: UIImage? {
         didSet {
             configUIStackViewHeaderPriorButton()
         }
     }
-    @IBInspectable var buttonNextImage: UIImage? {
+    @IBInspectable public var buttonNextImage: UIImage? {
         didSet {
             configUIStackViewHeaderNextButton()
         }
     }
-    @IBInspectable var buttonPriorText: String = "PREVIOUS" {
+    @IBInspectable public var buttonPriorText: String = "PREVIOUS" {
         didSet {
             configUIStackViewHeaderPriorButton()
         }
     }
-    @IBInspectable var buttonNextText: String = "NEXT" {
+    @IBInspectable public var buttonNextText: String = "NEXT" {
         didSet {
             configUIStackViewHeaderNextButton()
         }
     }
-    @IBInspectable var labelMonthFont: UIFont = UIFont.boldSystemFont(ofSize: CGFloat(16)) {
+    @IBInspectable public var labelMonthFont: UIFont = UIFont.boldSystemFont(ofSize: CGFloat(16)) {
         didSet {
             configUIStackViewHeaderLabelMonth()
         }
     }
-    @IBInspectable var labelMonthTextColor: UIColor = .orange {
+    @IBInspectable public var labelMonthTextColor: UIColor = .orange {
         didSet {
             configUIStackViewHeaderLabelMonth()
         }
     }
     // stackView weekdays properties
-    @IBInspectable var stackViewWeekdaysBackgroundColor: UIColor = .clear {
+    @IBInspectable public var stackViewWeekdaysBackgroundColor: UIColor = .clear {
         didSet {
             configUIStackViewWeekDays()
         }
     }
-    @IBInspectable var labelWeekdaysTextColor: UIColor = .blue {
+    @IBInspectable public var labelWeekdaysTextColor: UIColor = .blue {
         didSet {
             configUIStackViewWeekDays()
         }
     }
-    @IBInspectable var labelWeekdaysFont: UIFont = .boldSystemFont(ofSize: CGFloat(14)) {
+    @IBInspectable public var labelWeekdaysFont: UIFont = .boldSystemFont(ofSize: CGFloat(14)) {
         didSet {
             configUIStackViewWeekDays()
         }
     }
     // collectionView properties
-    @IBInspectable var cvBackgroundColor: UIColor = .clear {
+    @IBInspectable public var cvBackgroundColor: UIColor = .clear {
         didSet {
             configUICollectionView()
         }
     }
     var collectioViewExpandedHeightConstraint: NSLayoutConstraint?
     // expand buttom
-    @IBInspectable var buttonExpandTextColor: UIColor = .lightGray {
+    @IBInspectable public var buttonExpandTextColor: UIColor = .lightGray {
         didSet {
             configUIExpandButton()
         }
     }
-    @IBInspectable var buttonExpandImage: UIImage? {
+    @IBInspectable public var buttonExpandImage: UIImage? {
         didSet {
             configUIExpandButton()
         }
     }
-    @IBInspectable var buttonExpandText: String = "EXPAND" {
+    @IBInspectable public var buttonExpandText: String = "EXPAND" {
         didSet {
             configUIExpandButton()
         }
     }
     // cell properties
-    @IBInspectable var cellCurrentBackgroundColor: UIColor = .clear
-    @IBInspectable var cellNotCurrentBackgroundColor: UIColor = .darkGray
-    @IBInspectable var cellCurrentTextColor: UIColor = .lightGray
-    @IBInspectable var cellNotCurrentTextColor: UIColor = .lightGray
-    @IBInspectable var cellTodayBackgroundColor: UIColor = .orange
-    @IBInspectable var cellTodayTextColor: UIColor = .white
-    @IBInspectable var cellFont: UIFont = .boldSystemFont(ofSize: 14)
+    @IBInspectable public var cellCurrentBackgroundColor: UIColor = .clear
+    @IBInspectable public var cellNotCurrentBackgroundColor: UIColor = .darkGray
+    @IBInspectable public var cellCurrentTextColor: UIColor = .lightGray
+    @IBInspectable public var cellNotCurrentTextColor: UIColor = .lightGray
+    @IBInspectable public var cellTodayBackgroundColor: UIColor = .orange
+    @IBInspectable public var cellTodayTextColor: UIColor = .white
+    @IBInspectable public var cellFont: UIFont = .boldSystemFont(ofSize: 14)
     // Parameters
     var cellSize = CGFloat(0)
     let screenSize: CGRect = UIScreen.main.bounds
-    @IBInspectable var separatorColor: UIColor = .lightGray {
+    @IBInspectable public var separatorColor: UIColor = .lightGray {
         didSet {
             viewModel.cellSpecs = getCellColorUISpecs()
             configUIStackViewWeekDays()
@@ -153,7 +153,7 @@ public final class HubCalendar: UIView {
         }
     }
     // Calendar core
-    @IBInspectable var isExpandable: Bool = true {
+    @IBInspectable public var isExpandable: Bool = true {
         didSet {
             buttonExpand?.isHidden = !isExpandable
         }
@@ -480,7 +480,7 @@ extension HubCalendar {
         }
     }
     
-    func resizeCalendar() {
+    public func resizeCalendar() {
         if isExpandable {
             self.collectioViewExpandedHeightConstraint?.isActive = false
             let numberOfLines = (CGFloat(viewModel.currentSet.count) / CGFloat(viewModel.numberOfItemsPerRow))
