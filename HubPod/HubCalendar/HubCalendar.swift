@@ -158,7 +158,7 @@ public final class HubCalendar: UIView {
             buttonExpand?.isHidden = !isExpandable
         }
     }
-    var delegate: HubCalendarDelegate?
+    public var delegate: HubCalendarDelegate?
     var safeArea = CGFloat(0)
     
 //    public init() {}
