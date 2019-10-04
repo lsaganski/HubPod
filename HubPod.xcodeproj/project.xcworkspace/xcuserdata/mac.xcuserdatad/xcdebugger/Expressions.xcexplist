@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "HubVideoPlayer.urlVideo.didset:HubVideoPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "assets.duration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubVideoPlayer.configProgressView():HubVideoPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "player.currentItem?.asset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "player.currentItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

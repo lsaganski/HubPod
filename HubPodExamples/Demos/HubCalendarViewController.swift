@@ -17,7 +17,8 @@ class HubCalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         navigationController?.title = "HubCalendar"
-        
+        navigationController?.navigationBar.backItem?.title = "BACK"
+
         let img = UIImageView()
         img.image = #imageLiteral(resourceName: "calendar_background")
         img.translatesAutoresizingMaskIntoConstraints = false

@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    let demos = ["HubCalendar"]
+    let demos = ["HubCalendar", "HubPlayer"]
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -36,6 +36,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0: navigationController?.pushViewController(HubCalendarViewController(), animated: true)
+        case 1: navigationController?.pushViewController(HubPlayerViewController(), animated: true)
+//        case 2: navigationController?.pushViewController(HubAudioPlayerViewController(), animated: true)
         default: return
         }
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */; };
 		21BF9518233ABC65009B0237 /* HubPod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21BF950E233ABC64009B0237 /* HubPod.framework */; };
 		21BF951D233ABC65009B0237 /* HubPodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF951C233ABC65009B0237 /* HubPodTests.swift */; };
 		21BF951F233ABC65009B0237 /* HubPod.h in Headers */ = {isa = PBXBuildFile; fileRef = 21BF9511233ABC64009B0237 /* HubPod.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +24,8 @@
 		21BF954C233C1894009B0237 /* HubCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF954B233C1894009B0237 /* HubCalendarViewController.swift */; };
 		21BF9551233D230E009B0237 /* HubPod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21BF950E233ABC64009B0237 /* HubPod.framework */; };
 		21BF9552233D230E009B0237 /* HubPod.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21BF950E233ABC64009B0237 /* HubPod.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		21BF9558233D2E97009B0237 /* HubPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF9557233D2E97009B0237 /* HubPlayer.swift */; };
+		21BF955A233D6B13009B0237 /* HubPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF9559233D6B13009B0237 /* HubPlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubVideoPlayerLayer.swift; sourceTree = "<group>"; };
 		21BF950E233ABC64009B0237 /* HubPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HubPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BF9511233ABC64009B0237 /* HubPod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HubPod.h; sourceTree = "<group>"; };
 		21BF9512233ABC64009B0237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,11 +84,13 @@
 		21BF9538233ABE0F009B0237 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21BF953A233ABE0F009B0237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21BF953E233BDB67009B0237 /* HubCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubCalendar.swift; sourceTree = "<group>"; };
-		21BF9540233BDD78009B0237 /* HubPod.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HubPod.podspec; path = ../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod.podspec; sourceTree = "<group>"; };
-		21BF9543233BFE61009B0237 /* HubCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HubCalendarViewModel.swift; path = ../../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod/HubCalendar/HubCalendarViewModel.swift; sourceTree = "<group>"; };
-		21BF9545233BFE71009B0237 /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayCollectionViewCell.swift; path = ../../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod/HubCalendar/DayCollectionViewCell.swift; sourceTree = "<group>"; };
-		21BF9548233BFEBB009B0237 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPod/Helpers/Extensions.swift; sourceTree = "<group>"; };
-		21BF954B233C1894009B0237 /* HubCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HubCalendarViewController.swift; path = ../../../../../../../../lesagak/Documents/Projects/Mobile/iOS/HubPod/HubPodExamples/Demos/HubCalendarViewController.swift; sourceTree = "<group>"; };
+		21BF9540233BDD78009B0237 /* HubPod.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HubPod.podspec; path = ../HubPod.podspec; sourceTree = "<group>"; };
+		21BF9543233BFE61009B0237 /* HubCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubCalendarViewModel.swift; sourceTree = "<group>"; };
+		21BF9545233BFE71009B0237 /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
+		21BF9548233BFEBB009B0237 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		21BF954B233C1894009B0237 /* HubCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubCalendarViewController.swift; sourceTree = "<group>"; };
+		21BF9557233D2E97009B0237 /* HubPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPlayer.swift; sourceTree = "<group>"; };
+		21BF9559233D6B13009B0237 /* HubPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubPlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +146,7 @@
 			children = (
 				21BF9547233BFEA8009B0237 /* Helpers */,
 				21BF9542233BFE21009B0237 /* HubCalendar */,
+				21BF9556233D2AA4009B0237 /* HubPlayer */,
 				21BF9540233BDD78009B0237 /* HubPod.podspec */,
 				21BF9511233ABC64009B0237 /* HubPod.h */,
 				21BF9512233ABC64009B0237 /* Info.plist */,
@@ -192,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				21BF954B233C1894009B0237 /* HubCalendarViewController.swift */,
+				21BF9559233D6B13009B0237 /* HubPlayerViewController.swift */,
 			);
 			path = Demos;
 			sourceTree = "<group>";
@@ -201,6 +209,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		21BF9556233D2AA4009B0237 /* HubPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				21BF9557233D2E97009B0237 /* HubPlayer.swift */,
+				04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */,
+			);
+			path = HubPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +377,8 @@
 				21BF9546233BFE71009B0237 /* DayCollectionViewCell.swift in Sources */,
 				21BF953F233BDB67009B0237 /* HubCalendar.swift in Sources */,
 				21BF9549233BFEBB009B0237 /* Extensions.swift in Sources */,
+				04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */,
+				21BF9558233D2E97009B0237 /* HubPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +397,7 @@
 				21BF9531233ABE0C009B0237 /* ViewController.swift in Sources */,
 				21BF952F233ABE0C009B0237 /* AppDelegate.swift in Sources */,
 				21BF954C233C1894009B0237 /* HubCalendarViewController.swift in Sources */,
+				21BF955A233D6B13009B0237 /* HubPlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
