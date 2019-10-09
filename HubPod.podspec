@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "HubPod"
-  spec.version      = "0.0.13"
+  spec.version      = "0.0.15"
   spec.summary      = "A CocoaPods library written in Swift"
 
   # This description is used to generate tags and improve search results.
@@ -91,6 +91,7 @@ This CocoaPods library brings a set of custom components to standardize on buidi
   #
 
   spec.source_files  = "HubPod/**/*.{h,m,swift}"
+  spec.resource_bundles = {'HubPod' => ['HubPod/Resources/*.png']}
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -105,7 +106,7 @@ This CocoaPods library brings a set of custom components to standardize on buidi
   #
 
   # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
+  spec.resources = "HubPod/Resources/*.png"
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 

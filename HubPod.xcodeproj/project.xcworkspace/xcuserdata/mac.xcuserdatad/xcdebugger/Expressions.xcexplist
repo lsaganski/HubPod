@@ -42,5 +42,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "resourceBundle">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

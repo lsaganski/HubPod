@@ -96,9 +96,7 @@ public final class HubPlayer: UIView {
         //            print("Setting category to AVAudioSessionCategoryPlayback failed.")
         //        }
         
-        let frameworkBundle = Bundle(for: HubPlayer.self)
-        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("HubPod.bundle")
-        resourceBundle = Bundle(url: bundleURL!)
+        resourceBundle = Bundle(identifier: "br.com.itaubba.HubPod") 
 
         createComponents()
         configUI()
@@ -256,7 +254,6 @@ public final class HubPlayer: UIView {
     }
     
     func configUIPlay() {
-        let bundle = Bundle(for: HubPlayer.self)
         if playing {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
