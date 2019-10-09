@@ -254,16 +254,16 @@ public final class HubPlayer: UIView {
     }
     
     func configUIPlay() {
-        print("Bundle Path: \(resourceBundle?.bundlePath)")
-        print("Bundle URL: \(resourceBundle?.bundleURL)")
-        print("Bundle Identifier: \(resourceBundle?.bundleIdentifier)")
+        print("Bundle Path: \(resourceBundle?.bundlePath ?? "")")
+        print("Bundle URL: \(resourceBundle?.bundleURL.absoluteString ?? "")")
+        print("Bundle Identifier: \(resourceBundle?.bundleIdentifier ?? "")")
         if playing {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
                 let img = UIImage(named:"button_pause", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
                 buttonPlay.setImage(img, for: .normal)
-                print("imgPause : \(img == nil ? "imgPause not found" : img?.description)")
+                print("imgPause : \(img?.description ?? "imgPause not found")")
             }
         } else {
             if let imgPlay = imagePlay {
@@ -271,7 +271,7 @@ public final class HubPlayer: UIView {
             } else {
                 let img = UIImage(named:"button_play", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
                 buttonPlay.setImage(img, for: .normal)
-                print("imgPlay : \(img == nil ? "imgPlay not found" : img?.description)")
+                print("imgPlay : \(img?.description ?? "imgPlay not found")")
             }
         }
         
