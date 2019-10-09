@@ -240,13 +240,13 @@ public final class HubPlayer: UIView {
             if let imgOff = imageSoundOff {
                 buttonMute.setImage(imgOff.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_off", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_off")?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgOn = imageSoundOn {
                 buttonMute.setImage(imgOn.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_on", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_on")?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
@@ -254,24 +254,24 @@ public final class HubPlayer: UIView {
     }
     
     func configUIPlay() {
-        print("Bundle Path: \(resourceBundle?.bundlePath ?? "")")
-        print("Bundle URL: \(resourceBundle?.bundleURL.absoluteString ?? "")")
-        print("Bundle Identifier: \(resourceBundle?.bundleIdentifier ?? "")")
+//        print("Bundle Path: \(resourceBundle?.bundlePath ?? "")")
+//        print("Bundle URL: \(resourceBundle?.bundleURL.absoluteString ?? "")")
+//        print("Bundle Identifier: \(resourceBundle?.bundleIdentifier ?? "")")
         if playing {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                let img = UIImage(named:"button_pause", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+                let img = UIImage(named:"button_pause")?.withRenderingMode(.alwaysTemplate)  // , in: resourceBundle, compatibleWith: nil
                 buttonPlay.setImage(img, for: .normal)
-                print("imgPause : \(img?.description ?? "imgPause not found")")
+//                print("imgPause : \(img?.description ?? "imgPause not found")")
             }
         } else {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                let img = UIImage(named:"button_play", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+                let img = UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate)
                 buttonPlay.setImage(img, for: .normal)
-                print("imgPlay : \(img?.description ?? "imgPlay not found")")
+//                print("imgPlay : \(img?.description ?? "imgPlay not found")")
             }
         }
         
