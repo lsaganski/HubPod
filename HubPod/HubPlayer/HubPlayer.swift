@@ -222,28 +222,29 @@ public final class HubPlayer: UIView {
     }
     
     func configUIColor() {
-        viewVideo.borderColor = colorButtons ?? .itauOrange
-        loading.color = colorButtons ?? .itauOrange
-        progressBar.tintColor = colorBarFront ?? .itauOrange
-        progressBar.thumbTintColor = colorButtons ?? .itauOrange
-        labelTime.textColor = colorButtons ?? .itauOrange
-        buttonPlay.tintColor = colorButtons ?? .itauOrange
-        buttonMute.tintColor = colorButtons ?? .itauOrange
+        viewVideo.borderColor = colorButtons ?? .black
+        loading.color = colorButtons ?? .black
+        progressBar.tintColor = colorBarFront ?? .black
+        progressBar.thumbTintColor = colorButtons ?? .black
+        labelTime.textColor = colorButtons ?? .black
+        buttonPlay.tintColor = colorButtons ?? .black
+        buttonMute.tintColor = colorButtons ?? .black
         layoutIfNeeded()
     }
 
     func configUISound() {
+        let bundle = Bundle(for: HubPlayer.self)
         if player.volume == 0.0 {
             if let imgOff = imageSoundOff {
                 buttonMute.setImage(imgOff.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_off")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_off", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgOn = imageSoundOn {
                 buttonMute.setImage(imgOn.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_on")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_on", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
@@ -251,17 +252,18 @@ public final class HubPlayer: UIView {
     }
     
     func configUIPlay() {
+        let bundle = Bundle(for: HubPlayer.self)
         if playing {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonPlay.setImage(UIImage(named:"button_pause")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonPlay.setImage(UIImage(named:"button_pause", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonPlay.setImage(UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonPlay.setImage(UIImage(named:"button_play", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         

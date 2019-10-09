@@ -64,13 +64,13 @@ extension HubPlayerViewController: UITableViewDelegate, UITableViewDataSource {
         
         let item = items[indexPath.row]
         cell.player.isVideoPlayer = item.1
-        cell.player.imagePlay = UIImage(named: "button_play")
-        cell.player.imagePause = UIImage(named: "button_pause")
-        cell.player.imageSoundOn = UIImage(named: "sound_on")
-        cell.player.imageSoundOff = UIImage(named: "sound_off")
-        cell.player.colorButtons = .cyan
-        cell.player.colorBarFront = .yellow
         cell.player.urlVideo = item.0
+//        cell.player.imagePlay = UIImage(named: "button_play")
+//        cell.player.imagePause = UIImage(named: "button_pause")
+//        cell.player.imageSoundOn = UIImage(named: "sound_on")
+//        cell.player.imageSoundOff = UIImage(named: "sound_off")
+        cell.player.colorButtons = .cyan
+//        cell.player.colorBarFront = .yellow
 
         return cell
     }
