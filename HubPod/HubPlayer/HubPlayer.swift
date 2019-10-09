@@ -240,13 +240,42 @@ public final class HubPlayer: UIView {
             if let imgOff = imageSoundOff {
                 buttonMute.setImage(imgOff.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_off")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                let img = UIImage(name: "sound_off", bundleOf: self)
+                buttonMute.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgOn = imageSoundOn {
                 buttonMute.setImage(imgOn.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_on")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                var img = UIImage(name: "sound_on", bundleOf: self)
+                if img != nil {
+                    print("imgok para Jonas")
+                } else {
+                    img = UIImage(named: "sound_on")
+                    if img != nil {
+                        print("imgok para named normal")
+                    } else {
+                        img = #imageLiteral(resourceName: "sound_on.png")
+                        if img != nil {
+                            print("imgok para literal")
+                        } else {
+                            resourceBundle = Bundle(identifier: "br.com.itaubba.HubPod")
+                            img = UIImage(named: "sound_on", in: resourceBundle, compatibleWith: nil)
+                            if img != nil {
+                                print("imgok para bundle identifier")
+                            } else {
+                                resourceBundle = Bundle(for: HubPlayer.self)
+                                img = UIImage(named: "sound_on", in: resourceBundle, compatibleWith: nil)
+                                if img != nil {
+                                    print("imgok para bundle for class")
+                                } else {
+                                    print("imgok NOT OK")
+                                }
+                            }
+                        }
+                    }
+                }
+                buttonMute.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
@@ -261,7 +290,8 @@ public final class HubPlayer: UIView {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                let img = UIImage(named:"button_pause")?.withRenderingMode(.alwaysTemplate)  // , in: resourceBundle, compatibleWith: nil
+                let img = UIImage(name: "button_pause", bundleOf: self)
+                //let img = UIImage(named:"button_pause")?.withRenderingMode(.alwaysTemplate)  // , in: resourceBundle, compatibleWith: nil
                 buttonPlay.setImage(img, for: .normal)
 //                print("imgPause : \(img?.description ?? "imgPause not found")")
             }
@@ -269,7 +299,8 @@ public final class HubPlayer: UIView {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                let img = UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate)
+                let img = UIImage(name: "button_play", bundleOf: self)
+//                let img = UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate)
                 buttonPlay.setImage(img, for: .normal)
 //                print("imgPlay : \(img?.description ?? "imgPlay not found")")
             }

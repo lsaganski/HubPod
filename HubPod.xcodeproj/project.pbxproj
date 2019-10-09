@@ -11,6 +11,7 @@
 		04064C53234E345D00CD9527 /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 04064C52234E345D00CD9527 /* sound_off.png */; };
 		04064C55234E346700CD9527 /* button_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 04064C54234E346700CD9527 /* button_play.png */; };
 		04064C57234E347500CD9527 /* button_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 04064C56234E347500CD9527 /* button_pause.png */; };
+		04064C59234E777D00CD9527 /* UIImageBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04064C58234E777D00CD9527 /* UIImageBundle.swift */; };
 		04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */; };
 		21BF9518233ABC65009B0237 /* HubPod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21BF950E233ABC64009B0237 /* HubPod.framework */; };
 		21BF951D233ABC65009B0237 /* HubPodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF951C233ABC65009B0237 /* HubPodTests.swift */; };
@@ -77,6 +78,7 @@
 		04064C52234E345D00CD9527 /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sound_off.png; path = HubPod/Resources/sound_off.png; sourceTree = SOURCE_ROOT; };
 		04064C54234E346700CD9527 /* button_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_play.png; path = HubPod/Resources/button_play.png; sourceTree = SOURCE_ROOT; };
 		04064C56234E347500CD9527 /* button_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_pause.png; path = HubPod/Resources/button_pause.png; sourceTree = SOURCE_ROOT; };
+		04064C58234E777D00CD9527 /* UIImageBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageBundle.swift; sourceTree = "<group>"; };
 		04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubVideoPlayerLayer.swift; sourceTree = "<group>"; };
 		21BF950E233ABC64009B0237 /* HubPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HubPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BF9511233ABC64009B0237 /* HubPod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HubPod.h; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				21BF9548233BFEBB009B0237 /* Extensions.swift */,
+				04064C58234E777D00CD9527 /* UIImageBundle.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 			files = (
 				21BF9544233BFE61009B0237 /* HubCalendarViewModel.swift in Sources */,
 				21BF9546233BFE71009B0237 /* DayCollectionViewCell.swift in Sources */,
+				04064C59234E777D00CD9527 /* UIImageBundle.swift in Sources */,
 				21BF953F233BDB67009B0237 /* HubCalendar.swift in Sources */,
 				21BF9549233BFEBB009B0237 /* Extensions.swift in Sources */,
 				04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */,
