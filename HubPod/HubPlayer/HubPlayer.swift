@@ -18,37 +18,37 @@ public final class HubPlayer: UIView {
     }
     @IBInspectable public var imagePlay: UIImage? = nil {
         didSet {
-            configUI()
+            configUIPlay()
         }
     }
     @IBInspectable public var imagePause: UIImage? = nil {
         didSet {
-            configUI()
+            configUIPlay()
         }
     }
     @IBInspectable public var imageSoundOn: UIImage? = nil {
         didSet {
-            configUI()
+            configUISound()
         }
     }
     @IBInspectable public var imageSoundOff: UIImage? = nil {
         didSet {
-            configUI()
+            configUISound()
         }
     }
     @IBInspectable public var imageProgress: UIImage? = nil {
         didSet {
-            configUI()
+            configProgress()
         }
     }
-    @IBInspectable public var colorButtons: UIColor = .itauOrange {
+    @IBInspectable public var colorButtons: UIColor? {
         didSet {
-            configUI()
+            configUIColor()
         }
     }
-    @IBInspectable public var colorBarFront: UIColor = .itauOrange {
+    @IBInspectable public var colorBarFront: UIColor? {
         didSet {
-            configUI()
+            configUIColor()
         }
     }
     // UI components
@@ -207,21 +207,29 @@ public final class HubPlayer: UIView {
     func configUI() {
         configUIPlay()
         configUISound()
-        viewVideo.borderColor = colorButtons
+        configProgress()
         viewVideo.borderWidth = 1
-        
-        loading.color = colorButtons
-
-        progressBar.tintColor = colorBarFront
-        if let imgBar = imageProgress {
-            progressBar.setThumbImage(imgBar.withRenderingMode(.alwaysTemplate), for: .normal)
-            progressBar.thumbTintColor = colorButtons
-        }
-        
         labelTime.font = .systemFont(ofSize: 12)
-        labelTime.textColor = colorButtons
         labelTime.textAlignment = .center
         labelTime.text = "00:00"
+        configUIColor()
+    }
+    
+    func configProgress() {
+        if let imgBar = imageProgress {
+            progressBar.setThumbImage(imgBar.withRenderingMode(.alwaysTemplate), for: .normal)
+        }
+    }
+    
+    func configUIColor() {
+        viewVideo.borderColor = colorButtons ?? .itauOrange
+        loading.color = colorButtons ?? .itauOrange
+        progressBar.tintColor = colorBarFront ?? .itauOrange
+        progressBar.thumbTintColor = colorButtons ?? .itauOrange
+        labelTime.textColor = colorButtons ?? .itauOrange
+        buttonPlay.tintColor = colorButtons ?? .itauOrange
+        buttonMute.tintColor = colorButtons ?? .itauOrange
+        layoutIfNeeded()
     }
 
     func configUISound() {
@@ -239,7 +247,7 @@ public final class HubPlayer: UIView {
             }
         }
         
-        buttonMute.tintColor = colorButtons
+        configUIColor()
     }
     
     func configUIPlay() {
@@ -253,11 +261,11 @@ public final class HubPlayer: UIView {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonPlay.setImage(UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
-        buttonPlay.tintColor = colorButtons
+        configUIColor()
     }
     
     func updateURL() {

@@ -3,10 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "HubVideoPlayer.urlVideo.didset:HubVideoPlayer.swift">
+         contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "assets.duration">
+               value = "player.currentItem">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -19,10 +19,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
+         contextName = "HubVideoPlayer.urlVideo.didset:HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "player.currentItem">
+               value = "assets.duration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubPlayer.colorButtons.didset:HubPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "colorButtons">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubPlayer.configUIColor():HubPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "colorButtons">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
