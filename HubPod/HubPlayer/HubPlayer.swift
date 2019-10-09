@@ -71,7 +71,6 @@ public final class HubPlayer: UIView {
         }
     }
     var playing = false
-    var resourceBundle: Bundle?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,8 +95,6 @@ public final class HubPlayer: UIView {
         //            print("Setting category to AVAudioSessionCategoryPlayback failed.")
         //        }
         
-        resourceBundle = Bundle(identifier: "br.com.itaubba.HubPod") 
-
         createComponents()
         configUI()
         if isVideoPlayer {
@@ -247,34 +244,7 @@ public final class HubPlayer: UIView {
             if let imgOn = imageSoundOn {
                 buttonMute.setImage(imgOn.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                var img = UIImage(name: "sound_on", bundleOf: self)
-                if img != nil {
-                    print("imgok para Jonas")
-                } else {
-                    img = UIImage(named: "sound_on")
-                    if img != nil {
-                        print("imgok para named normal")
-                    } else {
-                        img = #imageLiteral(resourceName: "sound_on.png")
-                        if img != nil {
-                            print("imgok para literal")
-                        } else {
-                            resourceBundle = Bundle(identifier: "br.com.itaubba.HubPod")
-                            img = UIImage(named: "sound_on", in: resourceBundle, compatibleWith: nil)
-                            if img != nil {
-                                print("imgok para bundle identifier")
-                            } else {
-                                resourceBundle = Bundle(for: HubPlayer.self)
-                                img = UIImage(named: "sound_on", in: resourceBundle, compatibleWith: nil)
-                                if img != nil {
-                                    print("imgok para bundle for class")
-                                } else {
-                                    print("imgok NOT OK")
-                                }
-                            }
-                        }
-                    }
-                }
+                let img = UIImage(name: "sound_on", bundleOf: self)
                 buttonMute.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
@@ -283,26 +253,19 @@ public final class HubPlayer: UIView {
     }
     
     func configUIPlay() {
-//        print("Bundle Path: \(resourceBundle?.bundlePath ?? "")")
-//        print("Bundle URL: \(resourceBundle?.bundleURL.absoluteString ?? "")")
-//        print("Bundle Identifier: \(resourceBundle?.bundleIdentifier ?? "")")
         if playing {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
                 let img = UIImage(name: "button_pause", bundleOf: self)
-                //let img = UIImage(named:"button_pause")?.withRenderingMode(.alwaysTemplate)  // , in: resourceBundle, compatibleWith: nil
-                buttonPlay.setImage(img, for: .normal)
-//                print("imgPause : \(img?.description ?? "imgPause not found")")
+                buttonPlay.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
                 let img = UIImage(name: "button_play", bundleOf: self)
-//                let img = UIImage(named:"button_play")?.withRenderingMode(.alwaysTemplate)
-                buttonPlay.setImage(img, for: .normal)
-//                print("imgPlay : \(img?.description ?? "imgPlay not found")")
+                buttonPlay.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
