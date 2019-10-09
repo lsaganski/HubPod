@@ -71,6 +71,7 @@ public final class HubPlayer: UIView {
         }
     }
     var playing = false
+    var resourceBundle: Bundle?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,6 +96,10 @@ public final class HubPlayer: UIView {
         //            print("Setting category to AVAudioSessionCategoryPlayback failed.")
         //        }
         
+        let frameworkBundle = Bundle(for: HubPlayer.self)
+        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("HubPod.bundle")
+        resourceBundle = Bundle(url: bundleURL!)
+
         createComponents()
         configUI()
         if isVideoPlayer {
@@ -233,18 +238,17 @@ public final class HubPlayer: UIView {
     }
 
     func configUISound() {
-        let bundle = Bundle(for: HubPlayer.self)
         if player.volume == 0.0 {
             if let imgOff = imageSoundOff {
                 buttonMute.setImage(imgOff.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_off", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_off", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgOn = imageSoundOn {
                 buttonMute.setImage(imgOn.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonMute.setImage(UIImage(named:"sound_on", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonMute.setImage(UIImage(named:"sound_on", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
@@ -257,13 +261,13 @@ public final class HubPlayer: UIView {
             if let imgPause = imagePause {
                 buttonPlay.setImage(imgPause.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonPlay.setImage(UIImage(named:"button_pause", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonPlay.setImage(UIImage(named:"button_pause", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         } else {
             if let imgPlay = imagePlay {
                 buttonPlay.setImage(imgPlay.withRenderingMode(.alwaysTemplate), for: .normal)
             } else {
-                buttonPlay.setImage(UIImage(named:"button_play", in: bundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
+                buttonPlay.setImage(UIImage(named:"button_play", in: resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
         }
         
