@@ -221,28 +221,9 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var day = currentSet[indexPath.row]
-       // day.isSelected = true
-//        currentSet[indexPath.row].isSelected = true
-//        collectionView.reloadData()
-//        if let cell = collectionView.cellForItem(at: indexPath) as? DayCollectionViewCell {
-//            cell.markerSelected.backgroundColor = cellSpecs?.cellSelectedBackgroundColor
-//            cell.labelDay.textColor = cellSpecs?.cellSelectedTextColor
-//        }
+        let day = currentSet[indexPath.row]
         //        if day.events.count > 0 {
         delegate?.onPressDate(date: day.date)
-        
         //        }
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//  //      var day = currentSet[indexPath.row]
-//        currentSet[indexPath.row].isSelected = false
-//      //  day.isSelected = false
-//        collectionView.reloadData()
-////        if let cell = collectionView.cellForItem(at: indexPath) as? DayCollectionViewCell {
-////            cell.markerSelected.backgroundColor = .clear
-////            cell.labelDay.textColor = cellSpecs?.cellCurrentTextColor
-////        }
-//    }
 }
