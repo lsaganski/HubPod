@@ -12,7 +12,11 @@ import UIKit
 class DayCollectionViewCell: UICollectionViewCell {
     let sepSize = CGFloat(1)
     var sepSizeConstraint: NSLayoutConstraint?
-    
+    var colorBackgroundSelected: UIColor?
+    var colorTextSelected: UIColor? = .white
+    var colorBackgroundNotSelected: UIColor? = .white
+    var colorTextNotSelected: UIColor? = .itauGray
+
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -49,7 +53,13 @@ class DayCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
+    let markerSelected: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let markerEventA: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,8 +74,8 @@ class DayCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            borderColor = isSelected ? .lightGray : .clear
-            borderWidth = isSelected ? 1 : 0
+            markerSelected.backgroundColor = isSelected ? colorBackgroundSelected ?? .itauOrange : .clear
+            labelDay.textColor = isSelected ? colorTextSelected ?? .white : colorTextNotSelected
         }
     }
     
@@ -98,6 +108,7 @@ class DayCollectionViewCell: UICollectionViewCell {
         stack.distribution = .fillEqually
         stack.alignment = .fill
         viewDay.addSubview(markerToday)
+        viewDay.addSubview(markerSelected)
         viewDay.addSubview(markerEventA)
         viewDay.addSubview(markerEventB)
         viewDay.addSubview(labelDay)
@@ -108,6 +119,12 @@ class DayCollectionViewCell: UICollectionViewCell {
         markerToday.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
         markerToday.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true
         markerToday.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.8).isActive = true
+
+        markerSelected.centerYAnchor.constraint(equalTo: viewDay.centerYAnchor, constant: 0).isActive = true
+        markerSelected.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
+        markerSelected.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true
+        markerSelected.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.8).isActive = true
+
         markerEventA.centerYAnchor.constraint(equalTo: viewDay.centerYAnchor, constant: 0).isActive = true
         markerEventA.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
         markerEventA.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true

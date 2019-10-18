@@ -44,6 +44,7 @@ class HubCalendarViewController: UIViewController {
         self.viewCalendar = viewC
 
         setupCalendar()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,7 +72,7 @@ class HubCalendarViewController: UIViewController {
             UIFont.boldSystemFont(ofSize: 15.0)
         viewCalendar?.cvBackgroundColor = .clear
         viewCalendar?.cellCurrentBackgroundColor = .clear
-        viewCalendar?.cellNotCurrentBackgroundColor = .darkGray
+        viewCalendar?.cellNotCurrentBackgroundColor = .clear
         viewCalendar?.cellCurrentTextColor = .lightGray
         viewCalendar?.cellNotCurrentTextColor = .lightGray
         viewCalendar?.cellTodayBackgroundColor = .orange
@@ -81,6 +82,8 @@ class HubCalendarViewController: UIViewController {
         viewCalendar?.buttonExpandTextColor = .lightGray
         viewCalendar?.buttonExpandImage = UIImage(named: "arrow_down")
         viewCalendar?.buttonExpandText = ""
+        viewCalendar?.cellSelectedBackgroundColor = .green
+        viewCalendar?.cellSelectedTextColor = .yellow
     }
 }
 

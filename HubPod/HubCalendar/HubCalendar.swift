@@ -135,13 +135,51 @@ public final class HubCalendar: UIView {
         }
     }
     // cell properties
-    @IBInspectable public var cellCurrentBackgroundColor: UIColor = .clear
-    @IBInspectable public var cellNotCurrentBackgroundColor: UIColor = .darkGray
-    @IBInspectable public var cellCurrentTextColor: UIColor = .lightGray
-    @IBInspectable public var cellNotCurrentTextColor: UIColor = .lightGray
-    @IBInspectable public var cellTodayBackgroundColor: UIColor = .orange
-    @IBInspectable public var cellTodayTextColor: UIColor = .white
-    @IBInspectable public var cellFont: UIFont = .boldSystemFont(ofSize: 14)
+    @IBInspectable public var cellSelectedBackgroundColor: UIColor = .itauOrange {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellSelectedTextColor: UIColor = .white {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellCurrentBackgroundColor: UIColor = .clear {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellNotCurrentBackgroundColor: UIColor = .darkGray {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellCurrentTextColor: UIColor = .lightGray {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellNotCurrentTextColor: UIColor = .lightGray {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellTodayBackgroundColor: UIColor = .orange {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellTodayTextColor: UIColor = .white {
+        didSet {
+//            onReloadData()
+        }
+    }
+    @IBInspectable public var cellFont: UIFont = .boldSystemFont(ofSize: 14) {
+        didSet {
+//            onReloadData()
+        }
+    }
     // Parameters
     var cellSize = CGFloat(0)
     let screenSize: CGRect = UIScreen.main.bounds
@@ -469,7 +507,7 @@ extension HubCalendar {
 }
 
 extension HubCalendar {
-    func toggleExpandedCalendar() {
+    public func toggleExpandedCalendar() {
         if isExpandable {
             collectionViewCollapsed?.isHidden = !(collectionViewCollapsed?.isHidden ?? true)
             collectionViewExpanded?.isHidden = !(collectionViewExpanded?.isHidden ?? false)
@@ -518,7 +556,9 @@ extension HubCalendar {
             cellCurrentTextColor: self.cellCurrentTextColor,
             cellNotCurrentTextColor: self.cellNotCurrentTextColor,
             cellFont: self.cellFont,
-            cellTodayBackgroundColor: self.cellTodayBackgroundColor
+            cellTodayBackgroundColor: self.cellTodayBackgroundColor,
+            cellSelectedBackgroundColor: self.cellSelectedBackgroundColor,
+            cellSelectedTextColor: self.cellSelectedTextColor
         )
     }
 }

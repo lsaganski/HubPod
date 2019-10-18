@@ -288,13 +288,14 @@ public final class HubPlayer: UIView {
                         self.loading.stopAnimating()
                         self.buttonPlay.isHidden = false
                         self.observerPlayerItemStatus?.invalidate()
+                        self.configProgressView()
                     }
                 })
 
                 DispatchQueue.main.async {
                     self.player.replaceCurrentItem(with: item)
-                    self.configProgressView()
                 }
+
             }
         }
     }

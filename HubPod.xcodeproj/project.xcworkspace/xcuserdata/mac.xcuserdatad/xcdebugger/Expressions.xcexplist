@@ -3,18 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
+         contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "player.currentItem">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HubVideoPlayer.configProgressView():HubVideoPlayer.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "player.currentItem?.asset">
+               value = "resourceBundle">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -27,14 +19,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubPlayer.colorButtons.didset:HubPlayer.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "colorButtons">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "HubPlayer.configUIColor():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
@@ -43,10 +27,56 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
+         contextName = "HubCalendarViewModel.collectionView(_:cellForItemAt:):HubCalendarViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "resourceBundle">
+               value = "cellSpecs?.cellSelectedBackgroundColor">
+            </PersistentString>
+            <PersistentString
+               value = "obj.isSelected">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubPlayer.colorButtons.didset:HubPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "colorButtons">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendar.cellSelectedBackgroundColor.didset:HubCalendar.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "newValue">
+            </PersistentString>
+            <PersistentString
+               value = "UIColor.green">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in HubPlayer.updateURL():HubPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "item.status">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "player.currentItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubVideoPlayer.configProgressView():HubVideoPlayer.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "player.currentItem?.asset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

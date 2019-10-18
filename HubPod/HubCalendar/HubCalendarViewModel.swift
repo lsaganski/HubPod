@@ -21,6 +21,7 @@ struct HubCalendarDay {
     let isHolyday: Bool
     let currentMonth: Bool
     let isToday: Bool
+    var isSelected: Bool
 }
 
 struct CellColorUISpecs {
@@ -34,6 +35,8 @@ struct CellColorUISpecs {
     let cellNotCurrentTextColor: UIColor
     let cellFont: UIFont
     let cellTodayBackgroundColor: UIColor
+    let cellSelectedBackgroundColor: UIColor
+    let cellSelectedTextColor: UIColor
 }
 
 protocol HubCalendarViewModelDelegate: AnyObject {
@@ -122,7 +125,7 @@ class HubCalendarViewModel: NSObject {
                 let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday)
+                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
                 self.currentSet.append(day)
             }
             let date = calendar.date(from: self.nextMonthDC) ?? Date()
@@ -135,7 +138,7 @@ class HubCalendarViewModel: NSObject {
                 let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: true, isToday: isToday)
+                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: true, isToday: isToday, isSelected: false)
                 self.currentSet.append(day)
             }
             let weekDay = lastDCFromCurrentMonth.weekday ?? 0
@@ -146,7 +149,7 @@ class HubCalendarViewModel: NSObject {
                 let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday)
+                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
                 self.currentSet.append(day)
             }
         }
@@ -172,6 +175,10 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
                                                             for: indexPath) as? DayCollectionViewCell else {
                                                                 fatalError()
         }
+        cell.colorBackgroundSelected = cellSpecs?.cellSelectedBackgroundColor
+        cell.colorBackgroundNotSelected = cellSpecs?.cellCurrentBackgroundColor
+        cell.colorTextSelected = cellSpecs?.cellSelectedTextColor
+        cell.colorTextNotSelected = cellSpecs?.cellCurrentTextColor
         cell.showHeader(show: !isExpanded)
         cell.separator.backgroundColor = cellSpecs?.separatorColor
         cell.showSeparator(show: !isExpanded || (isExpanded && (((indexPath.row + 1) % numberOfItemsPerRow) != 0)))
@@ -188,11 +195,14 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         }
         cell.backgroundColor = obj.currentMonth ? cellSpecs?.cellCurrentBackgroundColor : cellSpecs?.cellNotCurrentBackgroundColor
         cell.labelDay.text = "\(day)"
-        let notTodayTextColor = obj.currentMonth ? cellSpecs?.cellCurrentTextColor : cellSpecs?.cellNotCurrentTextColor
+        let notTodayTextColor = obj.isSelected ?
+            cellSpecs?.cellSelectedTextColor : obj.currentMonth ? cellSpecs?.cellCurrentTextColor : cellSpecs?.cellNotCurrentTextColor
         cell.labelDay.textColor = obj.isToday ? cellSpecs?.cellTodayTextColor : notTodayTextColor
         cell.labelDay.font = cellSpecs?.cellFont
         cell.markerToday.backgroundColor = obj.isToday ? cellSpecs?.cellTodayBackgroundColor : .clear
         cell.markerToday.layer.cornerRadius = (cell.frame.width * 0.4)
+//        cell.markerSelected.backgroundColor = obj.isSelected ? cellSpecs?.cellSelectedBackgroundColor : .clear
+        cell.markerSelected.layer.cornerRadius = (cell.frame.width * 0.4)
         if obj.events.count > 0 {
             cell.markerEventA.isHidden = false
             cell.markerEventB.isHidden = false
@@ -211,9 +221,28 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let day = currentSet[indexPath.row]
+        var day = currentSet[indexPath.row]
+       // day.isSelected = true
+//        currentSet[indexPath.row].isSelected = true
+//        collectionView.reloadData()
+//        if let cell = collectionView.cellForItem(at: indexPath) as? DayCollectionViewCell {
+//            cell.markerSelected.backgroundColor = cellSpecs?.cellSelectedBackgroundColor
+//            cell.labelDay.textColor = cellSpecs?.cellSelectedTextColor
+//        }
         //        if day.events.count > 0 {
         delegate?.onPressDate(date: day.date)
+        
         //        }
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//  //      var day = currentSet[indexPath.row]
+//        currentSet[indexPath.row].isSelected = false
+//      //  day.isSelected = false
+//        collectionView.reloadData()
+////        if let cell = collectionView.cellForItem(at: indexPath) as? DayCollectionViewCell {
+////            cell.markerSelected.backgroundColor = .clear
+////            cell.labelDay.textColor = cellSpecs?.cellCurrentTextColor
+////        }
+//    }
 }
