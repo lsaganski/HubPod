@@ -69,8 +69,9 @@ extension HubPlayerViewController: UITableViewDelegate, UITableViewDataSource {
 //        cell.player.imagePause = UIImage(named: "button_pause")
 //        cell.player.imageSoundOn = UIImage(named: "sound_on")
 //        cell.player.imageSoundOff = UIImage(named: "sound_off")
-        cell.player.colorButtons = .cyan
-//        cell.player.colorBarFront = .yellow
+        cell.player.colorButtons = .green
+        cell.player.colorBarFront = .orange
+        cell.player.colorBarBack = .red
 
         return cell
     }

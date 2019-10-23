@@ -51,12 +51,17 @@ public final class HubPlayer: UIView {
             configUIColor()
         }
     }
+    @IBInspectable public var colorBarBack: UIColor? {
+        didSet {
+            configUIColor()
+        }
+    }
     // UI components
     var viewContainer = UIView(frame: .zero)
     var viewVideo = HubVideoPlayerLayer(frame: .zero)
     var viewControls = UIView(frame: .zero)
     var buttonPlay = UIButton(type: .custom)
-    var progressBar = UISlider(frame: .zero)
+    var progressBar = CustomSlider(frame: .zero)
     var labelTime = UILabel(frame: .zero)
     var buttonMute = UIButton(type: .custom)
     var loading = UIActivityIndicatorView(frame: .zero)
@@ -123,19 +128,21 @@ public final class HubPlayer: UIView {
         viewControls.addSubview(buttonMute)
         viewControls.addSubview(loading)
         
-        let controlsHeight = CGFloat(40)
-        
         if isVideoPlayer {
-            let ratioWidth = CGFloat(16)
-            let ratioHeight = CGFloat(9)
+            let videoRatioWidth = CGFloat(16)
+            let videoRatioHeight = CGFloat(9)
             NSLayoutConstraint.activate([
                 viewVideo.topAnchor.constraint(equalTo: viewContainer.topAnchor, constant: 0),
                 viewVideo.leadingAnchor.constraint(equalTo: viewContainer.leadingAnchor, constant: 0),
                 viewVideo.trailingAnchor.constraint(equalTo: viewContainer.trailingAnchor, constant: 0),
-                viewVideo.heightAnchor.constraint(equalTo: viewVideo.widthAnchor, multiplier: ratioHeight/ratioWidth)
+                viewVideo.heightAnchor.constraint(equalTo: viewVideo.widthAnchor, multiplier: videoRatioHeight/videoRatioWidth)
                 ])
         }
         
+        let controlsHeight = CGFloat(28)
+        
+        let ratioWidth = CGFloat(35)
+        let ratioHeight = CGFloat(4)
         NSLayoutConstraint.activate([
             viewContainer.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             viewContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
@@ -147,34 +154,36 @@ public final class HubPlayer: UIView {
             viewControls.bottomAnchor.constraint(equalTo: viewContainer.bottomAnchor, constant: 0),
             viewControls.leadingAnchor.constraint(equalTo: viewContainer.leadingAnchor, constant: 0),
             viewControls.trailingAnchor.constraint(equalTo: viewContainer.trailingAnchor, constant: 0),
-            viewControls.heightAnchor.constraint(equalToConstant: controlsHeight),
+            viewControls.heightAnchor.constraint(equalToConstant: controlsHeight), // equalTo: viewContainer.widthAnchor, multiplier: ratioHeight/ratioWidth),
+//            viewControls.heightAnchor.constraint(equalToConstant: controlsHeight),
             
             buttonPlay.topAnchor.constraint(equalTo: viewControls.topAnchor),
             buttonPlay.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
-            buttonPlay.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 10),
-            buttonPlay.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -10),
+            buttonPlay.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 0),
+            buttonPlay.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -15),
             buttonPlay.heightAnchor.constraint(equalToConstant: controlsHeight),
             buttonPlay.widthAnchor.constraint(equalToConstant: controlsHeight),
 
             loading.topAnchor.constraint(equalTo: viewControls.topAnchor),
             loading.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
-            loading.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 10),
-            loading.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -10),
+            loading.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 0),
+            loading.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -15),
             loading.heightAnchor.constraint(equalToConstant: controlsHeight),
             loading.widthAnchor.constraint(equalToConstant: controlsHeight),
             
             progressBar.centerYAnchor.constraint(equalTo: viewControls.centerYAnchor),
-            progressBar.trailingAnchor.constraint(equalTo: labelTime.leadingAnchor, constant: -10),
+            progressBar.trailingAnchor.constraint(equalTo: labelTime.leadingAnchor, constant: -11),
             
-            labelTime.trailingAnchor.constraint(equalTo: buttonMute.leadingAnchor, constant: -10),
+            labelTime.trailingAnchor.constraint(equalTo: buttonMute.leadingAnchor, constant: -23),
             labelTime.centerYAnchor.constraint(equalTo: viewControls.centerYAnchor),
-            labelTime.widthAnchor.constraint(equalToConstant: controlsHeight),
+            labelTime.widthAnchor.constraint(equalToConstant: 40),
             
-            buttonMute.topAnchor.constraint(equalTo: viewControls.topAnchor),
-            buttonMute.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
-            buttonMute.trailingAnchor.constraint(equalTo: viewControls.trailingAnchor, constant: -10),
-            buttonMute.heightAnchor.constraint(equalToConstant: controlsHeight),
-            buttonMute.widthAnchor.constraint(equalToConstant: controlsHeight)
+//            buttonMute.topAnchor.constraint(equalTo: viewControls.topAnchor),
+//            buttonMute.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
+            buttonMute.centerYAnchor.constraint(equalTo: viewControls.centerYAnchor),
+            buttonMute.trailingAnchor.constraint(equalTo: viewControls.trailingAnchor, constant: -0),
+            buttonMute.heightAnchor.constraint(equalToConstant: 20),
+            buttonMute.widthAnchor.constraint(equalToConstant: 20)
             ])
         
         buttonPlay.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -209,7 +218,7 @@ public final class HubPlayer: UIView {
         configUISound()
         configProgress()
         viewVideo.borderWidth = 1
-        labelTime.font = .systemFont(ofSize: 12)
+        labelTime.font = .systemFont(ofSize: 13)
         labelTime.textAlignment = .center
         labelTime.text = "00:00"
         configUIColor()
@@ -223,12 +232,14 @@ public final class HubPlayer: UIView {
     
     func configUIColor() {
         viewVideo.borderColor = colorButtons ?? .black
-        loading.color = colorButtons ?? .black
-        progressBar.tintColor = colorBarFront ?? .black
-        progressBar.thumbTintColor = colorButtons ?? .black
-        labelTime.textColor = colorButtons ?? .black
-        buttonPlay.tintColor = colorButtons ?? .black
-        buttonMute.tintColor = colorButtons ?? .black
+        loading.color = colorButtons ?? .itauDarkGray
+//        progressBar.tintColor = colorBarFront ?? .black
+        progressBar.minimumTrackTintColor = colorBarFront ?? .itauOrange
+        progressBar.maximumTrackTintColor = colorBarBack ?? .itauLightGray
+        progressBar.thumbTintColor = .clear
+        labelTime.textColor = colorButtons ?? .itauDarkGray
+        buttonPlay.tintColor = colorButtons ?? .itauDarkGray
+        buttonMute.tintColor = colorButtons ?? .itauDarkGray
         layoutIfNeeded()
     }
 
@@ -392,4 +403,15 @@ extension CMTime {
             return String(format: "%02i:%02i", minutes, seconds)
         }
     }
+}
+
+class CustomSlider: UISlider {
+    
+    override func trackRect(forBounds bounds: CGRect) -> CGRect {
+        let height = CGFloat(6)
+        let customBounds = CGRect(origin: CGPoint(x: bounds.origin.x, y: (bounds.size.height/2)+1-(height/2)), size: CGSize(width: bounds.size.width, height: height))
+        super.trackRect(forBounds: customBounds)
+        return customBounds
+    }
+    
 }

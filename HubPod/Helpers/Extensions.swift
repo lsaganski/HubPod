@@ -55,6 +55,7 @@ extension UIColor {
     static let itauOrange = UIColor(hex: "#F7A128FF") ?? .orange
     static let itauLightGray = UIColor(hex: "#E5E5E5FF") ?? .lightGray
     static let itauGray = UIColor(hex: "#ACACACFF") ?? .gray
+    static let itauDarkGray = UIColor(hex: "#6E6E6EFF") ?? .gray
     static let itauBlue = UIColor(hex: "#004A79FF") ?? .blue
     
     public convenience init?(hex: String) {
