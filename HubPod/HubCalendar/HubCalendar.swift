@@ -175,7 +175,7 @@ public final class HubCalendar: UIView {
 //            onReloadData()
         }
     }
-    @IBInspectable public var cellFont: UIFont = .boldSystemFont(ofSize: 14) {
+    @IBInspectable public var cellFont: UIFont = .systemFont(ofSize: 14) {
         didSet {
 //            onReloadData()
         }
@@ -526,16 +526,16 @@ extension HubCalendar {
             self.collectioViewExpandedHeightConstraint?.isActive = true
             let newH = viewModel.isExpanded ? (numberOfLines+3.5) * cellSize : 4.5 * cellSize
             delegate?.onResizeSked(expanding: viewModel.isExpanded, height: newH)
-            UIView.animate(withDuration: 0.65, delay: 0.0,
-                           usingSpringWithDamping: 0.8,
-                           initialSpringVelocity: 0.3,
-                           options: .curveEaseInOut, animations: {
-                            [weak self] in
-                            guard let self = self else {
-                                return
-                            }
-                            self.viewContainer?.layoutIfNeeded()
-            })
+//            UIView.animate(withDuration: 2.65, delay: 0.0,
+//                           usingSpringWithDamping: 0.8,
+//                           initialSpringVelocity: 0.3,
+//                           options: .curveEaseInOut, animations: {
+//                            [weak self] in
+//                            guard let self = self else {
+//                                return
+//                            }
+//                            self.viewContainer?.layoutIfNeeded()
+//            })
         }
     }
     
@@ -576,6 +576,12 @@ extension HubCalendar: HubCalendarViewModelDelegate {
         self.collectionViewExpanded?.reloadData()
         if isExpandable {
             self.collectionViewCollapsed?.reloadData()
+            if !viewModel.isExpanded && viewModel.isCurrentMonth {
+                let indexPath = viewModel.indexPathForFirstDayOfThisWeek
+                if indexPath.row >= 0 {
+                    self.collectionViewCollapsed?.scrollToItem(at: indexPath, at: .left, animated: false)
+                }
+            }
         }
     }
 }

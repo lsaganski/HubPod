@@ -3,6 +3,23 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "HubCalendarViewModel.indexForToday.getter:HubCalendarViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "today">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet[index].date == today">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet[index].date">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
@@ -30,7 +47,10 @@
          contextName = "HubCalendarViewModel.collectionView(_:cellForItemAt:):HubCalendarViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cellSpecs?.cellSelectedBackgroundColor">
+               value = "cellSpecs?.cellFont.pointSize">
+            </PersistentString>
+            <PersistentString
+               value = "">
             </PersistentString>
             <PersistentString
                value = "obj.isSelected">
@@ -79,6 +99,9 @@
                value = "player.currentItem?.asset">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -63,6 +63,7 @@ class HubCalendarViewModel: NSObject {
     let cellReuseIdentifier = "calendarCell"
     var calendar: Calendar { return Calendar.current }
     var currentDate: Date = Date()
+    var today: Date = Date()
     var currentMonthDC = DateComponents()
     var priorMonthDC = DateComponents()
     var nextMonthDC = DateComponents()
@@ -80,6 +81,28 @@ class HubCalendarViewModel: NSObject {
     let numberOfItemsPerRow: Int = 7
     var isExpanded = true
     var cellSpecs: CellColorUISpecs?
+    
+    var isCurrentMonth: Bool {
+        let currentMonth = self.calendar.component(.month, from: self.currentDate)
+        let todayMonth = self.calendar.component(.month, from: self.today)
+
+        return currentMonth == todayMonth
+    }
+    
+    var indexPathForFirstDayOfThisWeek: IndexPath {
+        let weekday = calendar.component(.weekday, from: Date())
+        return IndexPath(row: indexForToday-weekday+1, section: 0)
+    }
+    
+    var indexForToday: Int {
+        for index in 0..<currentSet.count {
+            if calendar.dateComponents(self.requestedComponents, from: currentSet[index].date) ==
+               calendar.dateComponents(self.requestedComponents, from: today) {
+                return index
+            }
+        }
+        return -1
+    }
     
     func loadPriorMonth() {
         if let date = calendar.date(byAdding: .month, value: -1, to: currentDate) {

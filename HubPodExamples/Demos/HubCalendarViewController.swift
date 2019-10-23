@@ -77,7 +77,7 @@ class HubCalendarViewController: UIViewController {
         viewCalendar?.cellNotCurrentTextColor = .lightGray
         viewCalendar?.cellTodayBackgroundColor = .orange
         viewCalendar?.cellTodayTextColor = .white
-        viewCalendar?.cellFont = UIFont(name: "SFProDisplay-Bold", size: 14.0) ?? UIFont.boldSystemFont(ofSize: 14.0)
+//        viewCalendar?.cellFont = UIFont(name: "SFProDisplay-Bold", size: 14.0) ?? UIFont.boldSystemFont(ofSize: 14.0)
         viewCalendar?.separatorColor = .lightGray
         viewCalendar?.buttonExpandTextColor = .lightGray
         viewCalendar?.buttonExpandImage = UIImage(named: "arrow_down")
@@ -90,7 +90,7 @@ class HubCalendarViewController: UIViewController {
 extension HubCalendarViewController: HubCalendarDelegate {
     func onResizeSked(expanding: Bool, height: CGFloat) {
         calendarViewHeightConstraint?.constant = height
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.6,
                        delay: 0.0,
                        usingSpringWithDamping: 2.0,
                        initialSpringVelocity: 2.0,
