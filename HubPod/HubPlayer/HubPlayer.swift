@@ -141,8 +141,8 @@ public final class HubPlayer: UIView {
         
         let controlsHeight = CGFloat(28)
         
-        let ratioWidth = CGFloat(35)
-        let ratioHeight = CGFloat(4)
+//        let ratioWidth = CGFloat(35)
+//        let ratioHeight = CGFloat(4)
         NSLayoutConstraint.activate([
             viewContainer.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             viewContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
