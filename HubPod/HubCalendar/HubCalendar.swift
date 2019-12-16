@@ -483,8 +483,10 @@ extension HubCalendar {
     func configUIExpandButton() {
         self.buttonExpand?.backgroundColor = .clear
         if self.buttonExpandImage != nil {
-            self.buttonExpand?.setImage(self.buttonExpandImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+            let image = self.buttonExpandImage?.withRenderingMode(.alwaysTemplate)
+            self.buttonExpand?.setImage(image, for: .normal)
             self.buttonExpand?.tintColor = self.buttonExpandTextColor
+            self.buttonExpand?.transform = viewModel.isExpanded ? CGAffineTransform(rotationAngle: .pi) : CGAffineTransform.identity
         }
         self.buttonExpand?.setTitleColor(self.buttonExpandTextColor, for: .normal)
         self.buttonExpand?.setTitle(self.buttonExpandText, for: .normal)
@@ -509,10 +511,11 @@ extension HubCalendar {
 extension HubCalendar {
     public func toggleExpandedCalendar() {
         if isExpandable {
-            collectionViewCollapsed?.isHidden = !(collectionViewCollapsed?.isHidden ?? true)
-            collectionViewExpanded?.isHidden = !(collectionViewExpanded?.isHidden ?? false)
-            stackViewWeekDays?.isHidden = collectionViewExpanded?.isHidden ?? false
             viewModel.isExpanded = !viewModel.isExpanded
+            collectionViewCollapsed?.isHidden = viewModel.isExpanded
+            collectionViewExpanded?.isHidden = !viewModel.isExpanded
+            stackViewWeekDays?.isHidden = !viewModel.isExpanded
+            configUIExpandButton()
             viewModel.loadComponent()
             resizeCalendar()
         }
@@ -520,22 +523,13 @@ extension HubCalendar {
     
     public func resizeCalendar() {
         if isExpandable {
+            
             self.collectioViewExpandedHeightConstraint?.isActive = false
             let numberOfLines = (CGFloat(viewModel.currentSet.count) / CGFloat(viewModel.numberOfItemsPerRow))
             self.collectioViewExpandedHeightConstraint?.constant = numberOfLines * cellSize
             self.collectioViewExpandedHeightConstraint?.isActive = true
             let newH = viewModel.isExpanded ? (numberOfLines+3.5) * cellSize : 4.5 * cellSize
             delegate?.onResizeSked(expanding: viewModel.isExpanded, height: newH)
-//            UIView.animate(withDuration: 2.65, delay: 0.0,
-//                           usingSpringWithDamping: 0.8,
-//                           initialSpringVelocity: 0.3,
-//                           options: .curveEaseInOut, animations: {
-//                            [weak self] in
-//                            guard let self = self else {
-//                                return
-//                            }
-//                            self.viewContainer?.layoutIfNeeded()
-//            })
         }
     }
     
