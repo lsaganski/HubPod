@@ -53,6 +53,9 @@ class HubCalendarViewController: UIViewController {
     
     func setupCalendar() {
         viewCalendar?.delegate = self
+        viewCalendar?.showMarkerA = true
+        viewCalendar?.showMarkerB = false
+        viewCalendar?.colorMarkerA = .green
         viewCalendar?.backgroundColor = .clear
         viewCalendar?.containerBackgroundColor = .clear
         viewCalendar?.containerHorizontalPaddings = 0
@@ -84,6 +87,16 @@ class HubCalendarViewController: UIViewController {
         viewCalendar?.buttonExpandText = ""
         viewCalendar?.cellSelectedBackgroundColor = .green
         viewCalendar?.cellSelectedTextColor = .yellow
+        
+        viewCalendar?.events =
+                [
+                HubCalendarEvent(date: Calendar.current.date(byAdding: .day, value: 3, to: Date())!, title: "Aniversário", description: "Festa de aniversário do Joao."),
+                HubCalendarEvent(date: Calendar.current.date(byAdding: .day, value: 6, to: Date())!, title: "Reunião", description: "Reunião com a diretoria."),
+                HubCalendarEvent(date: Calendar.current.date(byAdding: .day, value: 9, to: Date())!, title: "Viagem", description: "Viagem para Florianópolis."),
+                HubCalendarEvent(date: Calendar.current.date(byAdding: .day, value: 12, to: Date())!, title: "Inauguração", description: "Inauguração da nova filial em Curitiba."),
+                HubCalendarEvent(date: Calendar.current.date(byAdding: .day, value: 15, to: Date())!, title: "Apresentação", description: "Apresentação dos resultados do mês."),
+            ]
+
     }
 }
 
@@ -100,9 +113,15 @@ extension HubCalendarViewController: HubCalendarDelegate {
             }, completion: nil)
     }
     
-    func onPressDate(date: Date) {
+    func onPressDate(date: Date, events: [HubCalendarEvent]) {
         let formatted: String = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .none)
-        let alertController = UIAlertController(title: "Date Picked !!", message: formatted, preferredStyle: .alert)
+        
+        var text: String = ""
+        for event in events {
+            text += "\(event.title)\n"
+        }
+        
+        let alertController = UIAlertController(title: "Date Picked !!", message: "\(formatted)\n\(text)", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }

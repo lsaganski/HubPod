@@ -3,27 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "HubCalendarViewModel.indexForToday.getter:HubCalendarViewModel.swift">
+         contextName = "HubPlayer.colorButtons.didset:HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "today">
-            </PersistentString>
-            <PersistentString
-               value = "currentSet[index].date == today">
-            </PersistentString>
-            <PersistentString
-               value = "currentSet[index].date">
-            </PersistentString>
-            <PersistentString
-               value = "currentSet.count">
+               value = "colorButtons">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
+         contextName = "HubVideoPlayer.configProgressView():HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "resourceBundle">
+               value = "player.currentItem?.asset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -44,24 +35,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubCalendarViewModel.collectionView(_:cellForItemAt:):HubCalendarViewModel.swift">
+         contextName = "closure #1 in HubPlayer.updateURL():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cellSpecs?.cellFont.pointSize">
-            </PersistentString>
-            <PersistentString
-               value = "">
-            </PersistentString>
-            <PersistentString
-               value = "obj.isSelected">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HubPlayer.colorButtons.didset:HubPlayer.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "colorButtons">
+               value = "item.status">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -77,10 +54,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in HubPlayer.updateURL():HubPlayer.swift">
+         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
-               value = "item.status">
+               value = "resourceBundle">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -93,15 +73,46 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubVideoPlayer.configProgressView():HubVideoPlayer.swift">
+         contextName = "HubCalendarViewModel.indexForToday.getter:HubCalendarViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "player.currentItem?.asset">
+               value = "today">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet[index].date == today">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet[index].date">
+            </PersistentString>
+            <PersistentString
+               value = "currentSet.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
+         contextName = "HubCalendar.getCellColorUISpecs():HubCalendar.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "showMarkerA">
+            </PersistentString>
+            <PersistentString
+               value = "showMarkerB">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendarViewModel.collectionView(_:cellForItemAt:):HubCalendarViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+            <PersistentString
+               value = "cellSpecs?.cellFont.pointSize">
+            </PersistentString>
+            <PersistentString
+               value = "obj.isSelected">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

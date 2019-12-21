@@ -10,6 +10,7 @@
 		04064C59234E777D00CD9527 /* UIImageBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04064C58234E777D00CD9527 /* UIImageBundle.swift */; };
 		04064C5B234E83BE00CD9527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04064C5A234E83BE00CD9527 /* Assets.xcassets */; };
 		04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */; };
+		04F7CDE123AD093A00475621 /* HubCalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7CDE023AD093A00475621 /* HubCalendarEvent.swift */; };
 		21BF9518233ABC65009B0237 /* HubPod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21BF950E233ABC64009B0237 /* HubPod.framework */; };
 		21BF951D233ABC65009B0237 /* HubPodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BF951C233ABC65009B0237 /* HubPodTests.swift */; };
 		21BF951F233ABC65009B0237 /* HubPod.h in Headers */ = {isa = PBXBuildFile; fileRef = 21BF9511233ABC64009B0237 /* HubPod.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -74,6 +75,7 @@
 		04064C58234E777D00CD9527 /* UIImageBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageBundle.swift; sourceTree = "<group>"; };
 		04064C5A234E83BE00CD9527 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04CA4E3A234505B600A017DB /* HubVideoPlayerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubVideoPlayerLayer.swift; sourceTree = "<group>"; };
+		04F7CDE023AD093A00475621 /* HubCalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubCalendarEvent.swift; sourceTree = "<group>"; };
 		21BF950E233ABC64009B0237 /* HubPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HubPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BF9511233ABC64009B0237 /* HubPod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HubPod.h; sourceTree = "<group>"; };
 		21BF9512233ABC64009B0237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				21BF953E233BDB67009B0237 /* HubCalendar.swift */,
 				21BF9543233BFE61009B0237 /* HubCalendarViewModel.swift */,
 				21BF9545233BFE71009B0237 /* DayCollectionViewCell.swift */,
+				04F7CDE023AD093A00475621 /* HubCalendarEvent.swift */,
 			);
 			path = HubCalendar;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				21BF9546233BFE71009B0237 /* DayCollectionViewCell.swift in Sources */,
 				04064C59234E777D00CD9527 /* UIImageBundle.swift in Sources */,
 				21BF953F233BDB67009B0237 /* HubCalendar.swift in Sources */,
+				04F7CDE123AD093A00475621 /* HubCalendarEvent.swift in Sources */,
 				21BF9549233BFEBB009B0237 /* Extensions.swift in Sources */,
 				04CA4E3B234505B600A017DB /* HubVideoPlayerLayer.swift in Sources */,
 				21BF9558233D2E97009B0237 /* HubPlayer.swift in Sources */,

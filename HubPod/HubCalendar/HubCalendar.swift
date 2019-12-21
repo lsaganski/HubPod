@@ -11,7 +11,7 @@ import UIKit
 
 public protocol HubCalendarDelegate: AnyObject {
     func onResizeSked(expanding: Bool, height: CGFloat)
-    func onPressDate(date: Date)
+    func onPressDate(date: Date, events: [HubCalendarEvent])
 }
 
 @IBDesignable
@@ -33,9 +33,22 @@ public final class HubCalendar: UIView {
     
     // view properties
     var viewExpandedHeightConstraint: NSLayoutConstraint?
+
+    public var events: [HubCalendarEvent]? {
+        didSet {
+            configEvents()
+        }
+    }
     
+    // Event markers config
+    public var showMarkerA: Bool?
+    public var showMarkerB: Bool?
+    public var colorMarkerA: UIColor?
+    public var colorMarkerB: UIColor?
+
     // viewContainer properties
-    @IBInspectable public var containerBackgroundColor: UIColor = .white {
+    @IBInspectable
+    public var containerBackgroundColor: UIColor = .white {
         didSet {
             configUIViewContainer()
         }
@@ -552,7 +565,11 @@ extension HubCalendar {
             cellFont: self.cellFont,
             cellTodayBackgroundColor: self.cellTodayBackgroundColor,
             cellSelectedBackgroundColor: self.cellSelectedBackgroundColor,
-            cellSelectedTextColor: self.cellSelectedTextColor
+            cellSelectedTextColor: self.cellSelectedTextColor,
+            showMarkerA: self.showMarkerA ?? false,
+            showMarkerB: self.showMarkerB ?? false,
+            colorMarkerA: self.colorMarkerA ?? .clear,
+            colorMarkerB: self.colorMarkerB ?? .clear
         )
     }
 }
@@ -562,8 +579,8 @@ extension HubCalendar: HubCalendarViewModelDelegate {
         self.labelMonth?.text = text
     }
     
-    func onPressDate(date: Date) {
-        self.delegate?.onPressDate(date: date)
+    func onPressDate(date: Date, events: [HubCalendarEvent]) {
+        self.delegate?.onPressDate(date: date, events: events)
     }
     
     func onReloadData() {
@@ -577,5 +594,12 @@ extension HubCalendar: HubCalendarViewModelDelegate {
                 }
             }
         }
+    }
+}
+
+extension HubCalendar {
+    func configEvents() {
+        viewModel.events = self.events ?? []
+        viewModel.loadComponent()
     }
 }
