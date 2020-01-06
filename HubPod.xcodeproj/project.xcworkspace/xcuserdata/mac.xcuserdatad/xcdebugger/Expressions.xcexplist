@@ -54,9 +54,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
-      </ContextState>
-      <ContextState
          contextName = "HubPlayer.initHubVideoPlayer():HubPlayer.swift">
          <PersistentStrings>
             <PersistentString
@@ -65,10 +62,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
+      </ContextState>
+      <ContextState
          contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
                value = "player.currentItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendarViewModel.indexPathForFirstDayOfThisWeek.getter:HubCalendarViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

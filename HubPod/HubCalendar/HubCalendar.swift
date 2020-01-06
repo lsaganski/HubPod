@@ -238,8 +238,9 @@ public final class HubCalendar: UIView {
 
 extension HubCalendar {
     func createComponents() {
-        safeArea = screenSize.width-containerHorizontalPaddings+1
+        safeArea = screenSize.width-containerHorizontalPaddings+0
         cellSize = safeArea/CGFloat(viewModel.numberOfItemsPerRow)
+        cellSize = round(cellSize * 100) / 100
         // Create container view
         let viewContainer = UIView(frame: .zero)
         viewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -269,7 +270,7 @@ extension HubCalendar {
         NSLayoutConstraint.activate([
             stackViewHeader.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackViewHeader.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            stackViewHeader.widthAnchor.constraint(equalToConstant: safeArea),
+            stackViewHeader.widthAnchor.constraint(equalToConstant: safeArea+1),
             stackViewHeader.heightAnchor.constraint(equalToConstant: cellSize)
             ])
         self.stackViewHeader = stackViewHeader
@@ -293,9 +294,11 @@ extension HubCalendar {
         self.addSubview(viewContainerCV)
         if let stack = self.stackViewHeader {
             NSLayoutConstraint.activate([
+//                viewContainerCV.leadingAnchor.constraint(equalTo: leadingAnchor),
+//                viewContainerCV.trailingAnchor.constraint(equalTo: trailingAnchor),
                 viewContainerCV.centerXAnchor.constraint(equalTo: centerXAnchor),
                 viewContainerCV.topAnchor.constraint(equalTo: stack.bottomAnchor),
-                viewContainerCV.widthAnchor.constraint(equalToConstant: safeArea)
+                viewContainerCV.widthAnchor.constraint(equalToConstant: safeArea+1)
                 ])
         }
         self.viewContainerCV = viewContainerCV
@@ -318,6 +321,7 @@ extension HubCalendar {
         self.collectioViewExpandedHeightConstraint?.priority = .init(998)
         self.collectioViewExpandedHeightConstraint?.isActive = true
         self.collectionViewExpanded = cvExpanded
+        
         //Create collectionView collapsed
         let layoutC: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutC.scrollDirection = .horizontal
@@ -426,6 +430,7 @@ extension HubCalendar {
     
     func configUIStackViewWeekDays() {
         self.stackViewWeekDays?.backgroundColor = self.stackViewWeekdaysBackgroundColor
+
         if let stack = self.stackViewWeekDays {
             for index in 0..<stack.subviews.count {
                 var day = stack.subviews[index]
@@ -441,19 +446,24 @@ extension HubCalendar {
         let label = UILabel(frame: .zero)
         label.text = viewModel.weekDays[index]
         label.translatesAutoresizingMaskIntoConstraints = false
-        let separator = UIView()
-        separator.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(label)
-        container.addSubview(separator)
-        separator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        separator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-        separator.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-        let sepSizeConstraint = separator.widthAnchor.constraint(equalToConstant: index < 6 ? 1 : 0)
-        sepSizeConstraint.isActive = true
         label.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
         label.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: separator.leadingAnchor).isActive = true
+
+        if index < 6 {
+            let separator = UIView()
+            separator.translatesAutoresizingMaskIntoConstraints = false
+            container.addSubview(separator)
+            separator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+            separator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+            let sepSizeConstraint = separator.widthAnchor.constraint(equalToConstant: index < 6 ? 1 : 0)
+            sepSizeConstraint.isActive = true
+            label.trailingAnchor.constraint(equalTo: separator.leadingAnchor).isActive = true
+        } else {
+            label.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        }
         return container
     }
     
@@ -490,6 +500,8 @@ extension HubCalendar {
     func configUICollectionView() {
         self.collectionViewExpanded?.backgroundColor = self.cvBackgroundColor
         self.collectionViewCollapsed?.backgroundColor = self.cvBackgroundColor
+        collectionViewExpanded?.borderWidth = 1
+        collectionViewExpanded?.borderColor = .green
         viewModel.cellSpecs = getCellColorUISpecs()
     }
     

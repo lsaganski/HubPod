@@ -50,13 +50,15 @@ class HubCalendarViewModel: NSObject {
             
         }
     }
+//    var eventsForCurrentDate: [HubCalendarEvent] = []
+
     var viewController: UIViewController?
     var delegate: HubCalendarViewModelDelegate?
     // Data
     let weekDays = ["S", "M", "T", "W", "T", "F", "S"]
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     let cellReuseIdentifier = "calendarCell"
-    var calendar: Calendar { return Calendar.current }
+    var calendar: Calendar = Calendar.current
     var currentDate: Date = Date()
     var today: Date = Date()
     var currentMonthDC = DateComponents()
@@ -85,8 +87,13 @@ class HubCalendarViewModel: NSObject {
     }
     
     var indexPathForFirstDayOfThisWeek: IndexPath {
-        let weekday = calendar.component(.weekday, from: Date())
-        return IndexPath(row: indexForToday-weekday+1, section: 0)
+//        var c = DateComponents()
+//        c.day = 30
+//        c.month = 12
+//        c.year = 2019
+//        let ddd = Calendar.current.date(from: c)!
+        let weekday = calendar.component(.weekday, from: today)
+        return IndexPath(row: indexForToday+1-weekday, section: 0)
     }
     
     var indexForToday: Int {
@@ -120,53 +127,61 @@ class HubCalendarViewModel: NSObject {
     }
     
     func prepareData() {
-        let month = self.calendar.component(.month, from: self.currentDate)
-        let year = self.calendar.component(.year, from: self.currentDate)
-        self.labelMonth = "\(self.months[month-1]) \(year)"
-        self.currentMonthDC = calendar.dateComponents(self.requestedComponents, from: self.currentDate)
-        self.currentMonthDC.setValue(1, for: .day)
-        let date = calendar.date(from: self.currentMonthDC) ?? Date()
-        self.currentMonthDC = calendar.dateComponents(self.requestedComponents, from: date)
-        let newPriorDate = calendar.date(byAdding: .day, value: -1, to: date) ?? Date()
-        self.priorMonthDC = calendar.dateComponents(self.requestedComponents, from: newPriorDate)
-        let newNextDate = calendar.date(byAdding: .month, value: 1, to: date) ?? Date()
-        self.nextMonthDC = calendar.dateComponents(self.requestedComponents, from: newNextDate)
+        
+        self.calendar.timeZone = TimeZone(abbreviation: "UTC")!
+//        self.calendar.date(byAdding: <#T##DateComponents#>, to: <#T##Date#>)
+//        var comp = DateComponents()
+//        comp.hour = 0
+//        currentDate = NSDate.now // calendar.date(from: comp)!
+//        today = NSDate.now //  calendar.date(from: comp)!
+        
+        let month = calendar.component(.month, from: currentDate)
+        let year = calendar.component(.year, from: currentDate)
+        labelMonth = "\(months[month-1]) \(year)"
+        currentMonthDC = calendar.dateComponents(requestedComponents, from: currentDate)
+        currentMonthDC.setValue(1, for: .day)
+        let date = calendar.date(from: currentMonthDC) ?? today
+        currentMonthDC = calendar.dateComponents(requestedComponents, from: date)
+        let newPriorDate = calendar.date(byAdding: .day, value: -1, to: date) ?? today
+        priorMonthDC = calendar.dateComponents(requestedComponents, from: newPriorDate)
+        let newNextDate = calendar.date(byAdding: .month, value: 1, to: date) ?? today
+        nextMonthDC = calendar.dateComponents(requestedComponents, from: newNextDate)
     }
     
     func loadDaysFromPriorCurrentAndNextMonths() {
-        if var numberOfDaysFromLastMonth = self.currentMonthDC.weekday {
+        if var numberOfDaysFromLastMonth = currentMonthDC.weekday {
             numberOfDaysFromLastMonth -= 1
-            self.currentSet = []
+            currentSet = []
             for index in stride(from: numberOfDaysFromLastMonth, to: 0, by: -1) {
-                let date = calendar.date(from: self.priorMonthDC) ?? Date()
-                let newDate = calendar.date(byAdding: .day, value: -(index-1), to: date) ?? Date()
-                let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
+                let date = calendar.date(from: priorMonthDC) ?? today
+                let newDate = calendar.date(byAdding: .day, value: -(index-1), to: date) ?? today
+                let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
-                let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
+                let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
                 let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
-                self.currentSet.append(day)
+                currentSet.append(day)
             }
-            let date = calendar.date(from: self.nextMonthDC) ?? Date()
-            let lastDateFromCurrentMonth = calendar.date(byAdding: .day, value: -1, to: date) ?? Date()
-            let lastDCFromCurrentMonth = calendar.dateComponents(self.requestedComponents, from: lastDateFromCurrentMonth)
+            let date = calendar.date(from: nextMonthDC) ?? today
+            let lastDateFromCurrentMonth = calendar.date(byAdding: .day, value: -1, to: date) ?? today
+            let lastDCFromCurrentMonth = calendar.dateComponents(requestedComponents, from: lastDateFromCurrentMonth)
             let day = lastDCFromCurrentMonth.day ?? 0
             for index in 0..<day {
-                let date = calendar.date(from: self.currentMonthDC) ?? Date()
-                let newDate = calendar.date(byAdding: .day, value: index, to: date) ?? Date()
-                let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
+                let date = calendar.date(from: currentMonthDC) ?? today
+                let newDate = calendar.date(byAdding: .day, value: index, to: date) ?? today
+                let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
-                let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
+                let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
                 let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: true, isToday: isToday, isSelected: false)
                 self.currentSet.append(day)
             }
             let weekDay = lastDCFromCurrentMonth.weekday ?? 0
             let numberOfDaysFromNextMonth = 7 - weekDay
             for index in 0..<numberOfDaysFromNextMonth {
-                let date = calendar.date(from: self.nextMonthDC) ?? Date()
-                let newDate = calendar.date(byAdding: .day, value: index, to: date) ?? Date()
-                let result = calendar.compare(newDate, to: Date(), toGranularity: .day)
+                let date = calendar.date(from: nextMonthDC) ?? today
+                let newDate = calendar.date(byAdding: .day, value: index, to: date) ?? today
+                let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
-                let eventList = events.filter { calendar.compare(newDate, to: $0.date, toGranularity: .day) == ComparisonResult.orderedSame }
+                let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
                 let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
                 self.currentSet.append(day)
             }
