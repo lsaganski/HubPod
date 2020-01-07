@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "HubPod"
-  spec.version      = "0.0.29"
+  spec.version      = "0.0.30"
   spec.summary      = "A CocoaPods library written in Swift"
 
   # This description is used to generate tags and improve search results.

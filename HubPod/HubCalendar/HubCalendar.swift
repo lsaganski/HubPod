@@ -500,8 +500,8 @@ extension HubCalendar {
     func configUICollectionView() {
         self.collectionViewExpanded?.backgroundColor = self.cvBackgroundColor
         self.collectionViewCollapsed?.backgroundColor = self.cvBackgroundColor
-        collectionViewExpanded?.borderWidth = 1
-        collectionViewExpanded?.borderColor = .green
+//        collectionViewExpanded?.borderWidth = 1
+//        collectionViewExpanded?.borderColor = .green
         viewModel.cellSpecs = getCellColorUISpecs()
     }
     
