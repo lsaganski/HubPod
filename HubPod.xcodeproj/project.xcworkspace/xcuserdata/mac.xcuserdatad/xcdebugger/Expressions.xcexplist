@@ -62,6 +62,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HubCalendarViewModel.indexPathForFirstDayOfThisWeek.getter:HubCalendarViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HubCalendar.onReloadData():HubCalendar.swift">
       </ContextState>
       <ContextState
@@ -69,14 +77,6 @@
          <PersistentStrings>
             <PersistentString
                value = "player.currentItem">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HubCalendarViewModel.indexPathForFirstDayOfThisWeek.getter:HubCalendarViewModel.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Date()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -96,6 +96,9 @@
                value = "currentSet.count">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendarViewModel.collectionView(_:didSelectItemAt:):HubCalendarViewModel.swift">
       </ContextState>
       <ContextState
          contextName = "HubCalendar.getCellColorUISpecs():HubCalendar.swift">
@@ -119,6 +122,14 @@
             </PersistentString>
             <PersistentString
                value = "obj.isSelected">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendarViewController.onPressDate(date:events:):HubCalendarViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "DateFormatter.locale">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

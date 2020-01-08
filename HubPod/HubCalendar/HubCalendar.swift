@@ -23,7 +23,7 @@ public final class HubCalendar: UIView {
     var imageViewBackground: UIImageView?
     var viewContainerCV: UIStackView?
     var stackViewHeader: UIStackView?
-    var stackViewWeekDays: UIStackView?
+//    var stackViewWeekDays: UIStackView?
     var collectionViewExpanded: UICollectionView?
     var collectionViewCollapsed: UICollectionView?
     var buttonPrior: UIButton?
@@ -111,17 +111,23 @@ public final class HubCalendar: UIView {
     // stackView weekdays properties
     @IBInspectable public var stackViewWeekdaysBackgroundColor: UIColor = .clear {
         didSet {
-            configUIStackViewWeekDays()
+            viewModel.cellSpecs = getCellColorUISpecs()
+//            configUIStackViewWeekDays()
+            collectionViewExpanded?.reloadData()
         }
     }
     @IBInspectable public var labelWeekdaysTextColor: UIColor = .blue {
         didSet {
-            configUIStackViewWeekDays()
+            viewModel.cellSpecs = getCellColorUISpecs()
+//            configUIStackViewWeekDays()
+            collectionViewExpanded?.reloadData()
         }
     }
     @IBInspectable public var labelWeekdaysFont: UIFont = .boldSystemFont(ofSize: CGFloat(14)) {
         didSet {
-            configUIStackViewWeekDays()
+            viewModel.cellSpecs = getCellColorUISpecs()
+//            configUIStackViewWeekDays()
+            collectionViewExpanded?.reloadData()
         }
     }
     // collectionView properties
@@ -199,7 +205,7 @@ public final class HubCalendar: UIView {
     @IBInspectable public var separatorColor: UIColor = .lightGray {
         didSet {
             viewModel.cellSpecs = getCellColorUISpecs()
-            configUIStackViewWeekDays()
+//            configUIStackViewWeekDays()
             collectionViewExpanded?.reloadData()
         }
     }
@@ -303,11 +309,11 @@ extension HubCalendar {
         }
         self.viewContainerCV = viewContainerCV
         // Create days stackView
-        let stackViewDays = UIStackView(frame: .zero)
-        stackViewDays.translatesAutoresizingMaskIntoConstraints = false
-        self.viewContainerCV?.addArrangedSubview(stackViewDays)
-        stackViewDays.heightAnchor.constraint(equalToConstant: cellSize).isActive = true
-        self.stackViewWeekDays = stackViewDays
+//        let stackViewDays = UIStackView(frame: .zero)
+//        stackViewDays.translatesAutoresizingMaskIntoConstraints = false
+//        self.viewContainerCV?.addArrangedSubview(stackViewDays)
+//        stackViewDays.heightAnchor.constraint(equalToConstant: cellSize).isActive = true
+//        self.stackViewWeekDays = stackViewDays
         //Create collectionView expanded
         let layoutE: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutE.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -317,7 +323,7 @@ extension HubCalendar {
         let cvExpanded = UICollectionView(frame: .zero, collectionViewLayout: layoutE)
         cvExpanded.translatesAutoresizingMaskIntoConstraints = false
         self.viewContainerCV?.addArrangedSubview(cvExpanded)
-        self.collectioViewExpandedHeightConstraint = cvExpanded.heightAnchor.constraint(equalToConstant: 200)
+        self.collectioViewExpandedHeightConstraint = cvExpanded.heightAnchor.constraint(equalToConstant: 200 + self.cellSize)
         self.collectioViewExpandedHeightConstraint?.priority = .init(998)
         self.collectioViewExpandedHeightConstraint?.isActive = true
         self.collectionViewExpanded = cvExpanded
@@ -342,8 +348,8 @@ extension HubCalendar {
         configUIViewContainer()
         createStackViewHeader()
         configUIStackViewHeader()
-        createStackViewWeekDays()
-        configUIStackViewWeekDays()
+//        createStackViewWeekDays()
+//        configUIStackViewWeekDays()
         setupCollectionView()
         configUICollectionView()
         configUIExpandButton()
@@ -422,66 +428,66 @@ extension HubCalendar {
         }
     }
     
-    func createStackViewWeekDays() {
-        for index in 0..<viewModel.numberOfItemsPerRow {
-            self.stackViewWeekDays?.addArrangedSubview(makeWeekDaysLabel(index: index))
-        }
-    }
-    
-    func configUIStackViewWeekDays() {
-        self.stackViewWeekDays?.backgroundColor = self.stackViewWeekdaysBackgroundColor
-
-        if let stack = self.stackViewWeekDays {
-            for index in 0..<stack.subviews.count {
-                var day = stack.subviews[index]
-                day = configUIWeekDaysLabel(view: day)
-                stack.removeArrangedSubview(day)
-                stack.insertArrangedSubview(day, at: index)
-            }
-        }
-    }
-    
-    func makeWeekDaysLabel(index: Int) -> UIView {
-        let container = UIView()
-        let label = UILabel(frame: .zero)
-        label.text = viewModel.weekDays[index]
-        label.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(label)
-        label.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-
-        if index < 6 {
-            let separator = UIView()
-            separator.translatesAutoresizingMaskIntoConstraints = false
-            container.addSubview(separator)
-            separator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-            separator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-            let sepSizeConstraint = separator.widthAnchor.constraint(equalToConstant: index < 6 ? 1 : 0)
-            sepSizeConstraint.isActive = true
-            label.trailingAnchor.constraint(equalTo: separator.leadingAnchor).isActive = true
-        } else {
-            label.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-        }
-        return container
-    }
-    
-    func configUIWeekDaysLabel(view: UIView) -> UIView {
-        view.backgroundColor = self.stackViewWeekdaysBackgroundColor
-        view.widthAnchor.constraint(equalToConstant: cellSize).isActive = true
-        for index in 0..<view.subviews.count {
-            if view.subviews[index] is UILabel {
-                (view.subviews[index] as? UILabel)?.textColor = self.labelWeekdaysTextColor
-                (view.subviews[index] as? UILabel)?.font = self.labelWeekdaysFont
-                (view.subviews[index] as? UILabel)?.textAlignment = .center
-            } else {
-                (view.subviews[index] as UIView).backgroundColor = self.separatorColor
-            }
-        }
-        return view
-    }
-    
+//    func createStackViewWeekDays() {
+//        for index in 0..<viewModel.numberOfItemsPerRow {
+//            self.stackViewWeekDays?.addArrangedSubview(makeWeekDaysLabel(index: index))
+//        }
+//    }
+//
+//    func configUIStackViewWeekDays() {
+//        self.stackViewWeekDays?.backgroundColor = self.stackViewWeekdaysBackgroundColor
+//
+//        if let stack = self.stackViewWeekDays {
+//            for index in 0..<stack.subviews.count {
+//                var day = stack.subviews[index]
+//                day = configUIWeekDaysLabel(view: day)
+//                stack.removeArrangedSubview(day)
+//                stack.insertArrangedSubview(day, at: index)
+//            }
+//        }
+//    }
+//
+//    func makeWeekDaysLabel(index: Int) -> UIView {
+//        let container = UIView()
+//        let label = UILabel(frame: .zero)
+//        label.text = viewModel.weekDays[index]
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        container.addSubview(label)
+//        label.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+//        label.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+//        label.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+//
+//        if index < 6 {
+//            let separator = UIView()
+//            separator.translatesAutoresizingMaskIntoConstraints = false
+//            container.addSubview(separator)
+//            separator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+//            separator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+//            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+//            let sepSizeConstraint = separator.widthAnchor.constraint(equalToConstant: index < 6 ? 1 : 0)
+//            sepSizeConstraint.isActive = true
+//            label.trailingAnchor.constraint(equalTo: separator.leadingAnchor).isActive = true
+//        } else {
+//            label.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+//        }
+//        return container
+//    }
+//
+//    func configUIWeekDaysLabel(view: UIView) -> UIView {
+//        view.backgroundColor = self.stackViewWeekdaysBackgroundColor
+//        view.widthAnchor.constraint(equalToConstant: cellSize).isActive = true
+//        for index in 0..<view.subviews.count {
+//            if view.subviews[index] is UILabel {
+//                (view.subviews[index] as? UILabel)?.textColor = self.labelWeekdaysTextColor
+//                (view.subviews[index] as? UILabel)?.font = self.labelWeekdaysFont
+//                (view.subviews[index] as? UILabel)?.textAlignment = .center
+//            } else {
+//                (view.subviews[index] as UIView).backgroundColor = self.separatorColor
+//            }
+//        }
+//        return view
+//    }
+//
     func setupCollectionView() {
         viewModel.cellSpecs = getCellColorUISpecs()
         
@@ -539,7 +545,7 @@ extension HubCalendar {
             viewModel.isExpanded = !viewModel.isExpanded
             collectionViewCollapsed?.isHidden = viewModel.isExpanded
             collectionViewExpanded?.isHidden = !viewModel.isExpanded
-            stackViewWeekDays?.isHidden = !viewModel.isExpanded
+//            stackViewWeekDays?.isHidden = !viewModel.isExpanded
             configUIExpandButton()
             viewModel.loadComponent()
             resizeCalendar()
@@ -550,7 +556,7 @@ extension HubCalendar {
         if isExpandable {
             
             self.collectioViewExpandedHeightConstraint?.isActive = false
-            let numberOfLines = (CGFloat(viewModel.currentSet.count) / CGFloat(viewModel.numberOfItemsPerRow))
+            let numberOfLines = (CGFloat(viewModel.currentSetE.count) / CGFloat(viewModel.numberOfItemsPerRow))
             self.collectioViewExpandedHeightConstraint?.constant = numberOfLines * cellSize
             self.collectioViewExpandedHeightConstraint?.isActive = true
             let newH = viewModel.isExpanded ? (numberOfLines+3.5) * cellSize : 4.5 * cellSize

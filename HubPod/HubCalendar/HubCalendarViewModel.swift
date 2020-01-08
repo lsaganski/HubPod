@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 struct HubCalendarDay {
+    let text: String
     let date: Date
     let events: [HubCalendarEvent]
     let isHolyday: Bool
     let currentMonth: Bool
     let isToday: Bool
     var isSelected: Bool
+    var isLabel: Bool
 }
 
 struct CellColorUISpecs {
@@ -44,7 +46,8 @@ protocol HubCalendarViewModelDelegate: AnyObject {
 }
 
 class HubCalendarViewModel: NSObject {
-    var currentSet: [HubCalendarDay] = []
+    var currentSetE: [HubCalendarDay] = []
+    var currentSetC: [HubCalendarDay] = []
     var events: [HubCalendarEvent] = [] {
         didSet {
             
@@ -78,7 +81,8 @@ class HubCalendarViewModel: NSObject {
     let numberOfItemsPerRow: Int = 7
     var isExpanded = true
     var cellSpecs: CellColorUISpecs?
-    
+    var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+
     var isCurrentMonth: Bool {
         let currentMonth = self.calendar.component(.month, from: self.currentDate)
         let todayMonth = self.calendar.component(.month, from: self.today)
@@ -97,8 +101,8 @@ class HubCalendarViewModel: NSObject {
     }
     
     var indexForToday: Int {
-        for index in 0..<currentSet.count {
-            if calendar.dateComponents(self.requestedComponents, from: currentSet[index].date) ==
+        for index in 0..<currentSetC.count {
+            if calendar.dateComponents(self.requestedComponents, from: currentSetC[index].date) ==
                calendar.dateComponents(self.requestedComponents, from: today) {
                 return index
             }
@@ -127,8 +131,7 @@ class HubCalendarViewModel: NSObject {
     }
     
     func prepareData() {
-        
-        self.calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        self.calendar.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)!
 //        self.calendar.date(byAdding: <#T##DateComponents#>, to: <#T##Date#>)
 //        var comp = DateComponents()
 //        comp.hour = 0
@@ -151,15 +154,22 @@ class HubCalendarViewModel: NSObject {
     func loadDaysFromPriorCurrentAndNextMonths() {
         if var numberOfDaysFromLastMonth = currentMonthDC.weekday {
             numberOfDaysFromLastMonth -= 1
-            currentSet = []
+            currentSetE = []
+            currentSetC = []
+            for day in weekDays {
+                let label = HubCalendarDay(text: day, date: Date(), events: [], isHolyday: false, currentMonth: false, isToday: false, isSelected: false, isLabel: true)
+                self.currentSetE.append(label)
+            }
             for index in stride(from: numberOfDaysFromLastMonth, to: 0, by: -1) {
                 let date = calendar.date(from: priorMonthDC) ?? today
                 let newDate = calendar.date(byAdding: .day, value: -(index-1), to: date) ?? today
                 let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
-                currentSet.append(day)
+                let text = String(calendar.component(.day, from: newDate))
+                let day = HubCalendarDay(text: text, date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false, isLabel: false)
+                currentSetC.append(day)
+                currentSetE.append(day)
             }
             let date = calendar.date(from: nextMonthDC) ?? today
             let lastDateFromCurrentMonth = calendar.date(byAdding: .day, value: -1, to: date) ?? today
@@ -171,8 +181,10 @@ class HubCalendarViewModel: NSObject {
                 let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: true, isToday: isToday, isSelected: false)
-                self.currentSet.append(day)
+                let text = String(calendar.component(.day, from: newDate))
+                let day = HubCalendarDay(text: text, date: newDate, events: eventList, isHolyday: false, currentMonth: true, isToday: isToday, isSelected: false, isLabel: false)
+                currentSetC.append(day)
+                currentSetE.append(day)
             }
             let weekDay = lastDCFromCurrentMonth.weekday ?? 0
             let numberOfDaysFromNextMonth = 7 - weekDay
@@ -182,8 +194,10 @@ class HubCalendarViewModel: NSObject {
                 let result = calendar.compare(newDate, to: today, toGranularity: .day)
                 let isToday = result == .orderedSame
                 let eventList = events.filter { calendar.compare(newDate, to: $0.initialDate, toGranularity: .day) == ComparisonResult.orderedSame }
-                let day = HubCalendarDay(date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false)
-                self.currentSet.append(day)
+                let text = String(calendar.component(.day, from: newDate))
+                let day = HubCalendarDay(text: text, date: newDate, events: eventList, isHolyday: false, currentMonth: false, isToday: isToday, isSelected: false, isLabel: false)
+                currentSetC.append(day)
+                currentSetE.append(day)
             }
         }
     }
@@ -193,11 +207,11 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isExpanded {
             if collectionView.tag == 1 {
-                return currentSet.count
+                return currentSetE.count
             }
         } else {
             if collectionView.tag == 2 {
-                return currentSet.count
+                return currentSetC.count
             }
         }
         return 0
@@ -211,16 +225,16 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cellSpecs = cellSpecs else {
             fatalError()
         }
-        cell.colorBackgroundSelected = cellSpecs.cellSelectedBackgroundColor
-        cell.colorBackgroundNotSelected = cellSpecs.cellCurrentBackgroundColor
-        cell.colorTextSelected = cellSpecs.cellSelectedTextColor
-        cell.colorTextNotSelected = cellSpecs.cellCurrentTextColor
+        let obj = isExpanded ? currentSetE[indexPath.row] : currentSetC[indexPath.row]
+        cell.colorBackgroundSelected = obj.isLabel ? .clear : cellSpecs.cellSelectedBackgroundColor
+        cell.colorBackgroundNotSelected = obj.isLabel ? .clear : cellSpecs.cellCurrentBackgroundColor
+        cell.colorTextSelected = obj.isLabel ? cellSpecs.labelWeekdaysTextColor : cellSpecs.cellSelectedTextColor
+        cell.colorTextNotSelected = obj.isLabel ? cellSpecs.labelWeekdaysTextColor : cellSpecs.cellCurrentTextColor
         cell.showHeader(show: !isExpanded)
         cell.separator.backgroundColor = cellSpecs.separatorColor
         cell.showSeparator(show: !isExpanded || (isExpanded && (((indexPath.row + 1) % numberOfItemsPerRow) != 0)))
-        let obj = currentSet[indexPath.row]
         let dateToShow = obj.date
-        let day = calendar.component(.day, from: dateToShow)
+//        let day = calendar.component(.day, from: dateToShow)
         let weekday = calendar.component(.weekday, from: dateToShow)
         if !isExpanded {
             cell.labelHeader.text = weekDays[weekday-1]
@@ -229,12 +243,12 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             cell.labelHeader.font = cellSpecs.labelWeekdaysFont
             cell.labelHeader.textAlignment = .center
         }
-        cell.backgroundColor = obj.currentMonth ? cellSpecs.cellCurrentBackgroundColor : cellSpecs.cellNotCurrentBackgroundColor
-        cell.labelDay.text = "\(day)"
-        let notTodayTextColor = obj.isSelected ?
+        cell.backgroundColor = obj.isLabel ? .clear : obj.currentMonth ? cellSpecs.cellCurrentBackgroundColor : cellSpecs.cellNotCurrentBackgroundColor
+        cell.labelDay.text = "\(obj.text)"
+        let notTodayTextColor = obj.isLabel ? cellSpecs.labelWeekdaysTextColor : obj.isSelected ?
             cellSpecs.cellSelectedTextColor : obj.currentMonth ? cellSpecs.cellCurrentTextColor : cellSpecs.cellNotCurrentTextColor
         cell.labelDay.textColor = obj.isToday ? cellSpecs.cellTodayTextColor : notTodayTextColor
-        cell.labelDay.font = cellSpecs.cellFont
+        cell.labelDay.font = obj.isLabel ? cellSpecs.labelWeekdaysFont : cellSpecs.cellFont
         cell.markerToday.backgroundColor = obj.isToday ? cellSpecs.cellTodayBackgroundColor : .clear
         cell.markerToday.layer.cornerRadius = (cell.frame.width * 0.4)
 //        cell.markerSelected.backgroundColor = obj.isSelected ? cellSpecs?.cellSelectedBackgroundColor : .clear
@@ -261,7 +275,7 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let day = currentSet[indexPath.row]
+        let day = isExpanded ? currentSetE[indexPath.row] : currentSetC[indexPath.row]
         delegate?.onPressDate(date: day.date, events: day.events)
     }
 }
