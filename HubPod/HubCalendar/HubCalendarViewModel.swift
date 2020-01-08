@@ -131,7 +131,7 @@ class HubCalendarViewModel: NSObject {
     }
     
     func prepareData() {
-        self.calendar.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)!
+        self.calendar.locale = Locale.current
 //        self.calendar.date(byAdding: <#T##DateComponents#>, to: <#T##Date#>)
 //        var comp = DateComponents()
 //        comp.hour = 0
