@@ -247,9 +247,9 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         cell.labelDay.textColor = obj.isToday ? cellSpecs.cellTodayTextColor : notTodayTextColor
         cell.labelDay.font = obj.isLabel ? cellSpecs.labelWeekdaysFont : cellSpecs.cellFont
         cell.markerToday.backgroundColor = obj.isToday ? cellSpecs.cellTodayBackgroundColor : .clear
-        cell.markerToday.layer.cornerRadius = (cell.frame.width * 0.4)
+        cell.markerToday.layer.cornerRadius = (cell.markerToday.bounds.width * 0.5)
 //        cell.markerSelected.backgroundColor = obj.isSelected ? cellSpecs?.cellSelectedBackgroundColor : .clear
-        cell.markerSelected.layer.cornerRadius = (cell.frame.width * 0.4)
+        cell.markerSelected.layer.cornerRadius = (cell.markerSelected.bounds.width * 0.5)
         if obj.events.count > 0 {
             if (cellSpecs.showMarkerA) {
                 cell.markerEventA.isHidden = !cellSpecs.showMarkerA
@@ -257,12 +257,12 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
                 //let borderColor = obj.currentMonth ? cellSpecs.cellCurrentTextColor : cellSpecs.cellNotCurrentTextColor
                 cell.markerEventA.layer.borderColor = (obj.isToday ? .clear : cellSpecs.colorMarkerA).cgColor
                 cell.markerEventA.layer.borderWidth = 1
-                cell.markerEventA.layer.cornerRadius = (cell.frame.width * 0.4)
+                cell.markerEventA.layer.cornerRadius = (cell.markerEventA.bounds.width * 0.5)
                 cell.labelDay.textColor = obj.isToday ? cellSpecs.cellTodayTextColor : cellSpecs.colorMarkerA
             } else if (cellSpecs.showMarkerB) {
                 cell.markerEventB.isHidden = !cellSpecs.showMarkerB
-                cell.markerEventB.backgroundColor = cellSpecs.colorMarkerB
-                cell.markerEventB.layer.cornerRadius = (cell.frame.width * 0.10)
+                cell.markerEventB.backgroundColor = obj.isToday ? .clear : cellSpecs.colorMarkerB
+                cell.markerEventB.layer.cornerRadius = (cell.markerEventB.bounds.width * 0.5)
             }
         } else {
             cell.markerEventA.isHidden = true

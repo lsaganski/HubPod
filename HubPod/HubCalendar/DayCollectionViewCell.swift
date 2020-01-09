@@ -117,22 +117,22 @@ class DayCollectionViewCell: UICollectionViewCell {
         labelDay.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor).isActive = true
         markerToday.centerYAnchor.constraint(equalTo: viewDay.centerYAnchor, constant: 0).isActive = true
         markerToday.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
-        markerToday.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true
-        markerToday.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.8).isActive = true
+        markerToday.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.7).isActive = true
+        markerToday.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.7).isActive = true
 
         markerSelected.centerYAnchor.constraint(equalTo: viewDay.centerYAnchor, constant: 0).isActive = true
         markerSelected.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
-        markerSelected.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true
-        markerSelected.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.8).isActive = true
+        markerSelected.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.7).isActive = true
+        markerSelected.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.7).isActive = true
 
         markerEventA.centerYAnchor.constraint(equalTo: viewDay.centerYAnchor, constant: 0).isActive = true
         markerEventA.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
-        markerEventA.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.8).isActive = true
-        markerEventA.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.8).isActive = true
+        markerEventA.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.7).isActive = true
+        markerEventA.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.7).isActive = true
         markerEventB.topAnchor.constraint(equalTo: labelDay.bottomAnchor, constant: 0).isActive = true
         markerEventB.centerXAnchor.constraint(equalTo: viewDay.centerXAnchor, constant: 0).isActive = true
-        markerEventB.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.2).isActive = true
-        markerEventB.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.2).isActive = true
+        markerEventB.widthAnchor.constraint(equalTo: viewDay.widthAnchor, multiplier: 0.12).isActive = true
+        markerEventB.heightAnchor.constraint(equalTo: viewDay.heightAnchor, multiplier: 0.12).isActive = true
     }
     
     func showHeader(show: Bool) {

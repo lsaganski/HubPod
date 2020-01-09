@@ -67,8 +67,9 @@ class HubCalendarViewController: UIViewController {
     func setupCalendar() {
         viewCalendar?.delegate = self
         viewCalendar?.showMarkerA = true
-        viewCalendar?.showMarkerB = false
         viewCalendar?.colorMarkerA = .green
+        viewCalendar?.showMarkerB = true
+        viewCalendar?.colorMarkerB = .yellow
         viewCalendar?.backgroundColor = .clear
         viewCalendar?.containerBackgroundColor = .clear
         viewCalendar?.containerHorizontalPaddings = 0
