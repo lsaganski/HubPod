@@ -195,7 +195,7 @@ public final class HubPlayer: UIView {
         buttonMute.addTarget(self, action: #selector(onPressMute), for: .touchUpInside)
 
         loading.hidesWhenStopped = true
-        loading.style = .whiteLarge
+        loading.style = .white
         loading.stopAnimating()
 
         progressBar.isContinuous = true
