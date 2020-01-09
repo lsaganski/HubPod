@@ -215,10 +215,15 @@ public final class HubCalendar: UIView {
             buttonExpand?.isHidden = !isExpandable
         }
     }
+
     public var delegate: HubCalendarDelegate?
     var safeArea = CGFloat(0)
     
-//    public init() {}
+    public init(expanded: Bool) {
+        super.init(frame: .zero)
+        viewModel.isExpanded = expanded
+        initHubCalendar()
+    }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -308,12 +313,6 @@ extension HubCalendar {
                 ])
         }
         self.viewContainerCV = viewContainerCV
-        // Create days stackView
-//        let stackViewDays = UIStackView(frame: .zero)
-//        stackViewDays.translatesAutoresizingMaskIntoConstraints = false
-//        self.viewContainerCV?.addArrangedSubview(stackViewDays)
-//        stackViewDays.heightAnchor.constraint(equalToConstant: cellSize).isActive = true
-//        self.stackViewWeekDays = stackViewDays
         //Create collectionView expanded
         let layoutE: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutE.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -327,7 +326,10 @@ extension HubCalendar {
         self.collectioViewExpandedHeightConstraint?.priority = .init(998)
         self.collectioViewExpandedHeightConstraint?.isActive = true
         self.collectionViewExpanded = cvExpanded
-        
+        if isExpandable {
+            collectionViewExpanded?.isHidden = !viewModel.isExpanded
+        }
+
         //Create collectionView collapsed
         let layoutC: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutC.scrollDirection = .horizontal
@@ -341,15 +343,13 @@ extension HubCalendar {
         self.viewContainerCV?.addArrangedSubview(cvCollapsed)
         cvCollapsed.heightAnchor.constraint(equalToConstant: self.cellSize*2).isActive = true
         self.collectionViewCollapsed = cvCollapsed
-        self.collectionViewCollapsed?.isHidden = true
+        collectionViewCollapsed?.isHidden = isExpandable ? viewModel.isExpanded : true
     }
     
     func configUI() {
         configUIViewContainer()
         createStackViewHeader()
         configUIStackViewHeader()
-//        createStackViewWeekDays()
-//        configUIStackViewWeekDays()
         setupCollectionView()
         configUICollectionView()
         configUIExpandButton()
@@ -428,66 +428,6 @@ extension HubCalendar {
         }
     }
     
-//    func createStackViewWeekDays() {
-//        for index in 0..<viewModel.numberOfItemsPerRow {
-//            self.stackViewWeekDays?.addArrangedSubview(makeWeekDaysLabel(index: index))
-//        }
-//    }
-//
-//    func configUIStackViewWeekDays() {
-//        self.stackViewWeekDays?.backgroundColor = self.stackViewWeekdaysBackgroundColor
-//
-//        if let stack = self.stackViewWeekDays {
-//            for index in 0..<stack.subviews.count {
-//                var day = stack.subviews[index]
-//                day = configUIWeekDaysLabel(view: day)
-//                stack.removeArrangedSubview(day)
-//                stack.insertArrangedSubview(day, at: index)
-//            }
-//        }
-//    }
-//
-//    func makeWeekDaysLabel(index: Int) -> UIView {
-//        let container = UIView()
-//        let label = UILabel(frame: .zero)
-//        label.text = viewModel.weekDays[index]
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        container.addSubview(label)
-//        label.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-//        label.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-//        label.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-//
-//        if index < 6 {
-//            let separator = UIView()
-//            separator.translatesAutoresizingMaskIntoConstraints = false
-//            container.addSubview(separator)
-//            separator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-//            separator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-//            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-//            let sepSizeConstraint = separator.widthAnchor.constraint(equalToConstant: index < 6 ? 1 : 0)
-//            sepSizeConstraint.isActive = true
-//            label.trailingAnchor.constraint(equalTo: separator.leadingAnchor).isActive = true
-//        } else {
-//            label.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-//        }
-//        return container
-//    }
-//
-//    func configUIWeekDaysLabel(view: UIView) -> UIView {
-//        view.backgroundColor = self.stackViewWeekdaysBackgroundColor
-//        view.widthAnchor.constraint(equalToConstant: cellSize).isActive = true
-//        for index in 0..<view.subviews.count {
-//            if view.subviews[index] is UILabel {
-//                (view.subviews[index] as? UILabel)?.textColor = self.labelWeekdaysTextColor
-//                (view.subviews[index] as? UILabel)?.font = self.labelWeekdaysFont
-//                (view.subviews[index] as? UILabel)?.textAlignment = .center
-//            } else {
-//                (view.subviews[index] as UIView).backgroundColor = self.separatorColor
-//            }
-//        }
-//        return view
-//    }
-//
     func setupCollectionView() {
         viewModel.cellSpecs = getCellColorUISpecs()
         
@@ -525,16 +465,19 @@ extension HubCalendar {
     
     @objc
     func onPressPrior() {
+        viewModel.reloadingCollapsed = true
         viewModel.loadPriorMonth()
     }
     
     @objc
     func onPressNext() {
+        viewModel.reloadingCollapsed = true
         viewModel.loadNextMonth()
     }
     
     @objc
     func onPressExpand() {
+        viewModel.reloadingCollapsed = true
         self.toggleExpandedCalendar()
     }
 }
@@ -545,7 +488,6 @@ extension HubCalendar {
             viewModel.isExpanded = !viewModel.isExpanded
             collectionViewCollapsed?.isHidden = viewModel.isExpanded
             collectionViewExpanded?.isHidden = !viewModel.isExpanded
-//            stackViewWeekDays?.isHidden = !viewModel.isExpanded
             configUIExpandButton()
             viewModel.loadComponent()
             resizeCalendar()
@@ -554,7 +496,6 @@ extension HubCalendar {
     
     public func resizeCalendar() {
         if isExpandable {
-            
             self.collectioViewExpandedHeightConstraint?.isActive = false
             let numberOfLines = (CGFloat(viewModel.currentSetE.count) / CGFloat(viewModel.numberOfItemsPerRow))
             self.collectioViewExpandedHeightConstraint?.constant = numberOfLines * cellSize
@@ -605,12 +546,12 @@ extension HubCalendar: HubCalendarViewModelDelegate {
         self.collectionViewExpanded?.reloadData()
         if isExpandable {
             self.collectionViewCollapsed?.reloadData()
-            if !viewModel.isExpanded && viewModel.isCurrentMonth {
-                let indexPath = viewModel.indexPathForFirstDayOfThisWeek
-                if indexPath.row >= 0 {
-                    self.collectionViewCollapsed?.scrollToItem(at: indexPath, at: .left, animated: false)
-                }
-            }
+//            if !viewModel.isExpanded && viewModel.isCurrentMonth {
+//                let indexPath = viewModel.indexPathForFirstDayOfThisWeek
+//                if indexPath.row >= 0 {
+//                    self.collectionViewCollapsed?.scrollToItem(at: indexPath, at: .left, animated: false)
+//                }
+//            }
         }
     }
 }

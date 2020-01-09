@@ -19,6 +19,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HubCalendar.createCollectionViews():HubCalendar.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "viewModel.isExpanded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HubVideoPlayer.urlVideo.didset:HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
@@ -62,21 +70,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubCalendarViewModel.indexPathForFirstDayOfThisWeek.getter:HubCalendarViewModel.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Date()">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
+         contextName = "HubCalendarViewModel.collectionView(_:didSelectItemAt:):HubCalendarViewModel.swift">
       </ContextState>
       <ContextState
          contextName = "HubVideoPlayer.createComponents():HubVideoPlayer.swift">
          <PersistentStrings>
             <PersistentString
                value = "player.currentItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HubCalendarViewModel.indexPathForFirstDayOfThisWeek.getter:HubCalendarViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -98,7 +106,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HubCalendarViewModel.collectionView(_:didSelectItemAt:):HubCalendarViewModel.swift">
+         contextName = "HubCalendar.onReloadData():HubCalendar.swift">
       </ContextState>
       <ContextState
          contextName = "HubCalendar.getCellColorUISpecs():HubCalendar.swift">

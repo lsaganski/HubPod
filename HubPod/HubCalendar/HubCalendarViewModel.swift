@@ -78,6 +78,8 @@ class HubCalendarViewModel: NSObject {
             delegate?.updateLabelMonth(text: labelMonth)
         }
     }
+    var reloadingCollapsed = true
+
     let numberOfItemsPerRow: Int = 7
     var isExpanded = true
     var cellSpecs: CellColorUISpecs?
@@ -91,11 +93,6 @@ class HubCalendarViewModel: NSObject {
     }
     
     var indexPathForFirstDayOfThisWeek: IndexPath {
-//        var c = DateComponents()
-//        c.day = 30
-//        c.month = 12
-//        c.year = 2019
-//        let ddd = Calendar.current.date(from: c)!
         let weekday = calendar.component(.weekday, from: today)
         return IndexPath(row: indexForToday+1-weekday, section: 0)
     }
@@ -277,5 +274,13 @@ extension HubCalendarViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let day = isExpanded ? currentSetE[indexPath.row] : currentSetC[indexPath.row]
         delegate?.onPressDate(date: day.date, events: day.events)
+    }
+
+    internal func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+      if reloadingCollapsed && collectionView.tag == 2 && !isExpanded && isCurrentMonth {
+        let indexToScrollTo = indexPathForFirstDayOfThisWeek
+        collectionView.scrollToItem(at: indexToScrollTo, at: .left, animated: false)
+        reloadingCollapsed = false
+      }
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct HubCalendarEvent {
-    public let id: Int
+    public let id: String
     public let initialDate: Date
     public let finalDate: Date
     public let title: String
@@ -18,7 +18,7 @@ public struct HubCalendarEvent {
     public let aux2: String
     public let aux3: String
     public let aux4: String
-    public init(id: Int = 0,
+    public init(id: String = "",
                 initialDate: Date = Date(),
                 finalDate: Date = Date(),
                 title: String = "",

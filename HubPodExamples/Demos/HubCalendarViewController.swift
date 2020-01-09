@@ -30,7 +30,7 @@ class HubCalendarViewController: UIViewController {
             img.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         
-        let viewC = HubCalendar()
+        let viewC = HubCalendar(expanded: false)
         viewC.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(viewC)
         NSLayoutConstraint.activate([
@@ -49,6 +49,19 @@ class HubCalendarViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         viewCalendar?.resizeCalendar()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            [weak self] in
+            self?.viewCalendar?.events =
+                    [
+                    HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 3, to: Date())!, title: "Aniversário", description: "Festa de aniversário do Joao."),
+                    HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 6, to: Date())!, title: "Reunião", description: "Reunião com a diretoria."),
+                    HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 9, to: Date())!, title: "Viagem", description: "Viagem para Florianópolis."),
+                    HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 12, to: Date())!, title: "Inauguração", description: "Inauguração da nova filial em Curitiba."),
+                    HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 15, to: Date())!, title: "Apresentação", description: "Apresentação dos resultados do mês."),
+                ]
+
+        }
     }
     
     func setupCalendar() {
@@ -88,14 +101,6 @@ class HubCalendarViewController: UIViewController {
         viewCalendar?.cellSelectedBackgroundColor = .green
         viewCalendar?.cellSelectedTextColor = .yellow
         
-        viewCalendar?.events =
-                [
-                HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 3, to: Date())!, title: "Aniversário", description: "Festa de aniversário do Joao."),
-                HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 6, to: Date())!, title: "Reunião", description: "Reunião com a diretoria."),
-                HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 9, to: Date())!, title: "Viagem", description: "Viagem para Florianópolis."),
-                HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 12, to: Date())!, title: "Inauguração", description: "Inauguração da nova filial em Curitiba."),
-                HubCalendarEvent(initialDate: Calendar.current.date(byAdding: .day, value: 15, to: Date())!, title: "Apresentação", description: "Apresentação dos resultados do mês."),
-            ]
 
     }
 }
