@@ -56,6 +56,12 @@ public final class HubPlayer: UIView {
             configUIColor()
         }
     }
+    @IBInspectable public var horizontalPaddingControls: CGFloat = 0.0 {
+        didSet {
+//            initHubVideoPlayer()
+            configUIPlay()
+        }
+    }
     // UI components
     var viewContainer = UIView(frame: .zero)
     var viewVideo = HubVideoPlayerLayer(frame: .zero)
@@ -65,11 +71,16 @@ public final class HubPlayer: UIView {
     var labelTime = UILabel(frame: .zero)
     var buttonMute = UIButton(type: .custom)
     var loading = UIActivityIndicatorView(frame: .zero)
+    var space = UIView(frame: .zero)
     // player variables
     private var player = AVPlayer()
     private var playerItem: AVPlayerItem?
     var timeObserverToken: Any?
     var observerPlayerItemStatus: NSKeyValueObservation?
+    var constraintLeadingControls: NSLayoutConstraint?
+    var constraintTraillingControls: NSLayoutConstraint?
+    var constraintWidthSpace: NSLayoutConstraint?
+    var constraintTraillingMute: NSLayoutConstraint?
     public var urlVideo: String = "" {
         didSet {
             updateURL()
@@ -108,6 +119,9 @@ public final class HubPlayer: UIView {
     }
     
     func createComponents() {
+//        viewContainer = UIView(frame: .zero)
+//        viewControls = UIView(frame: .zero)
+        
         viewContainer.translatesAutoresizingMaskIntoConstraints = false
         viewVideo.translatesAutoresizingMaskIntoConstraints = false
         viewControls.translatesAutoresizingMaskIntoConstraints = false
@@ -116,6 +130,7 @@ public final class HubPlayer: UIView {
         labelTime.translatesAutoresizingMaskIntoConstraints = false
         buttonMute.translatesAutoresizingMaskIntoConstraints = false
         loading.translatesAutoresizingMaskIntoConstraints = false
+        space.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(viewContainer)
         if isVideoPlayer {
@@ -127,6 +142,7 @@ public final class HubPlayer: UIView {
         viewControls.addSubview(labelTime)
         viewControls.addSubview(buttonMute)
         viewControls.addSubview(loading)
+        viewControls.addSubview(space)
         
         if isVideoPlayer {
             let videoRatioWidth = CGFloat(16)
@@ -151,22 +167,26 @@ public final class HubPlayer: UIView {
             
             viewControls.topAnchor.constraint(equalTo: isVideoPlayer ?
                 viewVideo.bottomAnchor : viewContainer.topAnchor, constant: 10),
-            viewControls.bottomAnchor.constraint(equalTo: viewContainer.bottomAnchor, constant: 0),
             viewControls.leadingAnchor.constraint(equalTo: viewContainer.leadingAnchor, constant: 0),
             viewControls.trailingAnchor.constraint(equalTo: viewContainer.trailingAnchor, constant: 0),
+            viewControls.bottomAnchor.constraint(equalTo: viewContainer.bottomAnchor, constant: 0),
             viewControls.heightAnchor.constraint(equalToConstant: controlsHeight), // equalTo: viewContainer.widthAnchor, multiplier: ratioHeight/ratioWidth),
 //            viewControls.heightAnchor.constraint(equalToConstant: controlsHeight),
             
+            space.centerYAnchor.constraint(equalTo: viewControls.centerYAnchor),
+            space.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor),
+            space.heightAnchor.constraint(equalToConstant: 10),
+            
             buttonPlay.topAnchor.constraint(equalTo: viewControls.topAnchor),
             buttonPlay.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
-            buttonPlay.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 0),
             buttonPlay.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -15),
+            buttonPlay.leadingAnchor.constraint(equalTo: space.trailingAnchor, constant: 0),
             buttonPlay.heightAnchor.constraint(equalToConstant: controlsHeight),
             buttonPlay.widthAnchor.constraint(equalToConstant: controlsHeight),
 
             loading.topAnchor.constraint(equalTo: viewControls.topAnchor),
             loading.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
-            loading.leadingAnchor.constraint(equalTo: viewControls.leadingAnchor, constant: 0),
+            loading.leadingAnchor.constraint(equalTo: space.trailingAnchor, constant: 0),
             loading.trailingAnchor.constraint(equalTo: progressBar.leadingAnchor, constant: -15),
             loading.heightAnchor.constraint(equalToConstant: controlsHeight),
             loading.widthAnchor.constraint(equalToConstant: controlsHeight),
@@ -181,16 +201,22 @@ public final class HubPlayer: UIView {
 //            buttonMute.topAnchor.constraint(equalTo: viewControls.topAnchor),
 //            buttonMute.bottomAnchor.constraint(equalTo: viewControls.bottomAnchor),
             buttonMute.centerYAnchor.constraint(equalTo: viewControls.centerYAnchor),
-            buttonMute.trailingAnchor.constraint(equalTo: viewControls.trailingAnchor, constant: -0),
             buttonMute.heightAnchor.constraint(equalToConstant: 20),
             buttonMute.widthAnchor.constraint(equalToConstant: 20)
             ])
+        
+        constraintWidthSpace = space.widthAnchor.constraint(equalToConstant: 0)
+        constraintTraillingMute = buttonMute.trailingAnchor.constraint(equalTo: viewControls.trailingAnchor, constant: 0)
+
+        constraintWidthSpace?.isActive = true
+        constraintTraillingMute?.isActive = true
         
         buttonPlay.setContentHuggingPriority(.defaultLow, for: .horizontal)
         progressBar.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         labelTime.setContentHuggingPriority(.defaultLow, for: .horizontal)
         buttonMute.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
+        space.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
         buttonPlay.addTarget(self, action: #selector(onPressPlay), for: .touchUpInside)
         buttonMute.addTarget(self, action: #selector(onPressMute), for: .touchUpInside)
 
@@ -240,6 +266,7 @@ public final class HubPlayer: UIView {
         labelTime.textColor = colorButtons ?? .itauDarkGray
         buttonPlay.tintColor = colorButtons ?? .itauDarkGray
         buttonMute.tintColor = colorButtons ?? .itauDarkGray
+        
         layoutIfNeeded()
     }
 
@@ -280,6 +307,14 @@ public final class HubPlayer: UIView {
             }
         }
         
+        constraintTraillingMute?.isActive = false
+        constraintTraillingMute?.constant = -horizontalPaddingControls
+        constraintTraillingMute?.isActive = true
+        constraintWidthSpace?.isActive = false
+        constraintWidthSpace?.constant = horizontalPaddingControls
+        constraintWidthSpace?.isActive = true
+        layoutIfNeeded()
+
         configUIColor()
     }
     
