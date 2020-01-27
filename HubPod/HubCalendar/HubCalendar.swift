@@ -103,7 +103,7 @@ public final class HubCalendar: UIView {
             configUIStackViewHeaderLabelMonth()
         }
     }
-    @IBInspectable public var labelMonthTextColor: UIColor = .orange {
+    @IBInspectable public var labelMonthTextColor: UIColor = .itauOrange {
         didSet {
             configUIStackViewHeaderLabelMonth()
         }
@@ -184,7 +184,7 @@ public final class HubCalendar: UIView {
 //            onReloadData()
         }
     }
-    @IBInspectable public var cellTodayBackgroundColor: UIColor = .orange {
+    @IBInspectable public var cellTodayBackgroundColor: UIColor = .itauOrange {
         didSet {
 //            onReloadData()
         }

@@ -52,7 +52,7 @@ extension UIView {
 //
 // MARK: - UIColor -
 extension UIColor {
-    static let itauOrange = UIColor(hex: "#F7A128FF") ?? .orange
+    static let itauOrange = #colorLiteral(red: 0.9568627451, green: 0.4745098039, blue: 0.1254901961, alpha: 1) //UIColor(hex: "#F7A128FF") ?? .orange
     static let itauLightGray = UIColor(hex: "#E5E5E5FF") ?? .lightGray
     static let itauGray = UIColor(hex: "#ACACACFF") ?? .gray
     static let itauDarkGray = UIColor(hex: "#6E6E6EFF") ?? .gray

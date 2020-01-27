@@ -257,7 +257,7 @@ public final class HubPlayer: UIView {
     }
     
     func configUIColor() {
-        viewVideo.borderColor = colorButtons ?? .black
+        viewVideo.borderColor = .clear //colorButtons ?? .black
         loading.color = colorButtons ?? .itauDarkGray
 //        progressBar.tintColor = colorBarFront ?? .black
         progressBar.minimumTrackTintColor = colorBarFront ?? .itauOrange

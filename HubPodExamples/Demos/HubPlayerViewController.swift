@@ -63,7 +63,7 @@ extension HubPlayerViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let item = items[indexPath.row]
-        cell.player.horizontalPaddingControls = 0
+        cell.player.horizontalPaddingControls = 20
         cell.player.isVideoPlayer = item.1
         cell.player.urlVideo = item.0
 //        cell.player.imagePlay = UIImage(named: "button_play")
