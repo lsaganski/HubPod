@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import HubPod
 
-class HubPlayerViewController: UIViewController {
+class HubPlayerViewController: UIViewController, HubPlayerDelegate {
     var items = [
         ("http://www.designband.com/wp-content/uploads/2010/05/mustang_sally.mp3",false),
         ("https://wolverine.raywenderlich.com/content/ios/tutorials/video_streaming/foxVillage.mp4",true),
@@ -18,9 +18,13 @@ class HubPlayerViewController: UIViewController {
         ("http://designband.com/wp-content/uploads/2012/10/Happy-D.mp3",false)
     ]
     
+//    var instance: HubPlayerViewController
+    
     override func viewDidLoad() {
         navigationController?.title = "HubPlayer"
         navigationController?.navigationBar.backItem?.title = "BACK"
+        
+//        instance = self
         
         let img = UIImageView()
         img.image = #imageLiteral(resourceName: "calendar_background")
@@ -50,6 +54,12 @@ class HubPlayerViewController: UIViewController {
         tbl.rowHeight = UITableView.automaticDimension
         tbl.estimatedRowHeight = 600
     }
+    
+    func didStartPlaying() {
+        //
+    }
+    
+
 }
 
 extension HubPlayerViewController: UITableViewDelegate, UITableViewDataSource {
@@ -73,6 +83,7 @@ extension HubPlayerViewController: UITableViewDelegate, UITableViewDataSource {
         cell.player.colorButtons = .green
         cell.player.colorBarFront = .orange
         cell.player.colorBarBack = .red
+        cell.player.hostVC = self
 
         return cell
     }

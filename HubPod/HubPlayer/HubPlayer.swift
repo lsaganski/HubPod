@@ -8,6 +8,11 @@
 
 import Foundation
 import AVFoundation
+import AVKit
+
+public protocol HubPlayerDelegate: class {
+    func didStartPlaying()
+}
 
 @IBDesignable
 public final class HubPlayer: UIView {
@@ -70,6 +75,7 @@ public final class HubPlayer: UIView {
     var progressBar = CustomSlider(frame: .zero)
     var labelTime = UILabel(frame: .zero)
     var buttonMute = UIButton(type: .custom)
+    var buttonFull = UIButton(type: .custom)
     var loading = UIActivityIndicatorView(frame: .zero)
     var space = UIView(frame: .zero)
     // player variables
@@ -81,6 +87,14 @@ public final class HubPlayer: UIView {
     var constraintTraillingControls: NSLayoutConstraint?
     var constraintWidthSpace: NSLayoutConstraint?
     var constraintTraillingMute: NSLayoutConstraint?
+    var delegate: HubPlayerDelegate?
+    
+    public var hostVC = UIViewController() {
+        didSet {
+            updateHost()
+        }
+    }
+    
     public var urlVideo: String = "" {
         didSet {
             updateURL()
@@ -118,6 +132,10 @@ public final class HubPlayer: UIView {
         }
     }
     
+    func updateHost() {
+//        hostVC.addChild(playerVC)
+    }
+    
     func createComponents() {
 //        viewContainer = UIView(frame: .zero)
 //        viewControls = UIView(frame: .zero)
@@ -129,13 +147,21 @@ public final class HubPlayer: UIView {
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         labelTime.translatesAutoresizingMaskIntoConstraints = false
         buttonMute.translatesAutoresizingMaskIntoConstraints = false
+        buttonFull.translatesAutoresizingMaskIntoConstraints = false
         loading.translatesAutoresizingMaskIntoConstraints = false
         space.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(viewContainer)
         if isVideoPlayer {
             viewContainer.addSubview(viewVideo)
+            viewContainer.addSubview(buttonFull)
+            let imgFull = #imageLiteral(resourceName: "fullscreen") //UIImage(name: "fullscreen", bundleOf: self)
+            buttonFull.setImage(imgFull.withRenderingMode(.alwaysTemplate), for: .normal)
+            buttonFull.tintColor = .white
+            buttonFull.alpha = 0.3
         }
+        buttonFull.isHidden = !isVideoPlayer
+
         viewContainer.addSubview(viewControls)
         viewControls.addSubview(buttonPlay)
         viewControls.addSubview(progressBar)
@@ -143,7 +169,9 @@ public final class HubPlayer: UIView {
         viewControls.addSubview(buttonMute)
         viewControls.addSubview(loading)
         viewControls.addSubview(space)
-        
+
+        let controlsHeight = CGFloat(28)
+
         if isVideoPlayer {
             let videoRatioWidth = CGFloat(16)
             let videoRatioHeight = CGFloat(9)
@@ -151,11 +179,14 @@ public final class HubPlayer: UIView {
                 viewVideo.topAnchor.constraint(equalTo: viewContainer.topAnchor, constant: 0),
                 viewVideo.leadingAnchor.constraint(equalTo: viewContainer.leadingAnchor, constant: 0),
                 viewVideo.trailingAnchor.constraint(equalTo: viewContainer.trailingAnchor, constant: 0),
-                viewVideo.heightAnchor.constraint(equalTo: viewVideo.widthAnchor, multiplier: videoRatioHeight/videoRatioWidth)
+                viewVideo.heightAnchor.constraint(equalTo: viewVideo.widthAnchor, multiplier: videoRatioHeight/videoRatioWidth),
+                
+                buttonFull.topAnchor.constraint(equalTo: viewVideo.topAnchor, constant: 10),
+                buttonFull.trailingAnchor.constraint(equalTo: viewVideo.trailingAnchor, constant: -10),
+                buttonFull.heightAnchor.constraint(equalToConstant: controlsHeight),
+                buttonFull.widthAnchor.constraint(equalToConstant: controlsHeight)
                 ])
         }
-        
-        let controlsHeight = CGFloat(28)
         
 //        let ratioWidth = CGFloat(35)
 //        let ratioHeight = CGFloat(4)
@@ -219,6 +250,7 @@ public final class HubPlayer: UIView {
 
         buttonPlay.addTarget(self, action: #selector(onPressPlay), for: .touchUpInside)
         buttonMute.addTarget(self, action: #selector(onPressMute), for: .touchUpInside)
+        buttonFull.addTarget(self, action: #selector(expandVideo), for: .touchUpInside)
 
         loading.hidesWhenStopped = true
         loading.style = .white
@@ -266,7 +298,9 @@ public final class HubPlayer: UIView {
         labelTime.textColor = colorButtons ?? .itauDarkGray
         buttonPlay.tintColor = colorButtons ?? .itauDarkGray
         buttonMute.tintColor = colorButtons ?? .itauDarkGray
-        
+        if isVideoPlayer {
+        }
+
         layoutIfNeeded()
     }
 
@@ -305,6 +339,9 @@ public final class HubPlayer: UIView {
                 let img = UIImage(name: "button_play", bundleOf: self)
                 buttonPlay.setImage(img?.withRenderingMode(.alwaysTemplate), for: .normal)
             }
+        }
+        
+        if isVideoPlayer {
         }
         
         constraintTraillingMute?.isActive = false
@@ -382,13 +419,14 @@ public final class HubPlayer: UIView {
     }
     
     func play() {
+        delegate?.didStartPlaying()
         player.play()
         addObservers()
         playing = true
         configUIPlay()
     }
     
-    func pause() {
+    public func pause() {
         player.pause()
         removeObservers()
         playing = false
@@ -415,6 +453,9 @@ public final class HubPlayer: UIView {
             self.timeObserverToken = nil
         }
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("avPlayerDidDismiss"), object: nil)
+//        player.removeObserver(self, forKeyPath: “timeControlStatus”)
     }
     
     @objc
@@ -422,6 +463,40 @@ public final class HubPlayer: UIView {
         playing = false
         configUIPlay()
         player.seek(to: CMTime.zero)
+    }
+    
+    @objc func expandVideo()  {
+        player.pause()
+        let controller = AVPlayerViewController()
+        controller.player = player
+        NotificationCenter.default.addObserver(self, selector: #selector(avPlayerClosed), name: Notification.Name("avPlayerDidDismiss"), object: nil)
+        hostVC.present(controller, animated: true) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.player.play()
+            }
+        }
+    }
+
+    @objc func avPlayerClosed(_ notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.player.play()
+        }
+    }
+}
+
+extension AVPlayerViewController {
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.player?.pause()
+        NotificationCenter.default.post(name: Notification.Name("avPlayerDidDismiss"), object: nil, userInfo: nil)
     }
 }
 
